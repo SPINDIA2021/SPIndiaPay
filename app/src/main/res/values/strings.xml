@@ -1,0 +1,229 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">SP India Pay</string>
+
+    <string name="balance">Balance</string>
+    <string name="Rupee">\u20B9</string>
+
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="register_here">Register</string>
+    <string name="mobile_recharge">Mobile\nRecharge</string>
+    <string name="micro_natm">Micro\nATM</string>
+    <string name="bus_nbooking">Bus\nBooking</string>
+    <string name="insurance_npayment">Insurance\nPayment</string>
+    <string name="aeps_npayments">AEPS\nPayments</string>
+    <string name="data_ncard">Data\nCard</string>
+    <string name="gas_npayment">Gas\nPayment</string>
+    <string name="water_payment">Water\nPayment</string>
+    <string name="fasttag_nrecharge">FastTag\nRecharge</string>
+    <string name="dmt_npayment">DMT\nPayment</string>
+    <string name="category">Category</string>
+    <string name="view_users">View Users</string>
+    <string name="add_user">Add User</string>
+    <string name="technical_error" translatable="false">We are facing some technical issue, please try after some time.</string>
+
+    <!--    Navigation-->
+    <string name="drawerOpen">drawerOpen</string>
+    <string name="drawerClose">drawerClose</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="sport_fragment">Sport Fragment</string>
+    <string name="movie_fragment">Movie Fragment</string>
+    <string name="wallet">Wallet</string>
+    <string name="rupee_zero">₹ 0.00</string>
+    <string name="aeps">Aeps</string>
+    <string name="request_nfunds">Request\nFunds</string>
+    <string name="add_nmoney">Add\nMoney</string>
+    <string name="transfer_funds">Transfer\nFunds</string>
+    <string name="fund_services">Fund Services</string>
+    <string name="recharge_services">Recharge Services</string>
+    <string name="recharge">Recharge</string>
+    <string name="dth_recharge">Dth Recharge</string>
+    <string name="dth_number">DTH Number</string>
+    <string name="select_operator">Choose Operator</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="land_line_recharge">Land-line Recharge</string>
+    <string name="land_line_number">Land-line Number</string>
+    <string name="request_funds">Request Funds</string>
+    <string name="send_request">Send Request</string>
+    <string name="add_money">Add Money</string>
+    <string name="phone_pe">Phone Pe</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="paytm">Paytm</string>
+    <string name="amazon_pay">Amazon Pay</string>
+    <string name="transfer_funds_title">Transfer Funds</string>
+    <string name="enter_amount_to_transfer">Enter Amount to Transfer</string>
+    <string name="recharge_reports">Recharge Reports</string>
+    <string name="all_reports">All\nReports</string>
+    <string name="specific_report">Specific\nReport</string>
+    <string name="fund_reports">Fund Reports</string>
+    <string name="other_reports">Other Reports</string>
+    <string name="debited_funds">Debited Funds</string>
+    <string name="fund_requests">Fund Requests</string>
+    <string name="ledgers">Ledgers</string>
+    <string name="commission_slab">Commission Slab</string>
+    <string name="commission_report">Commission Report</string>
+    <string name="dispute_report">Dispute\nReport</string>
+    <string name="aeps_reports">AEPS Reports</string>
+    <string name="aeps_nhistory">AEPS\nHistory</string>
+    <string name="aeps_nwithdrawal">AEPS\nWithdrawal</string>
+    <string name="aeps_nledger">AEPS\nLedger</string>
+    <string name="aeps_ncommission_slab">AEPS\nCommission Slab</string>
+    <string name="dmt_ncommission_slab">DMT\nCommission Slab</string>
+    <string name="dmt_reports">DMT Reports</string>
+    <string name="dmt_history">DMT\nHistory</string>
+    <string name="dmt_ndispute">DMT\nDispute</string>
+    <string name="dmt_ncommission_history">DMT\nCommission History</string>
+    <string name="date_range">Date Range</string>
+    <string name="recharge_type">Recharge Type</string>
+    <string name="dd_mmm_yy_dd_mmm_yy">dd MMM yy</string>
+    <string name="pull_to_refresh">Pull down to refresh</string>
+    <string name="txnid">TXNID :</string>
+    <string name="dispute">Dispute</string>
+    <string name="recid">RECID :</string>
+    <string name="operator">Operator</string>
+    <string name="recharge_number">Recharge Number </string>
+    <string name="opening_nbalance">Opening\nBalance</string>
+    <string name="commission_nrecieved">Commission\nRecieved</string>
+    <string name="closing_nbalance">Closing\nBalance</string>
+    <string name="my_profile">My Profile</string>
+    <string name="retailer">Retailer</string>
+    <string name="change_npassword">Change\nPassword</string>
+    <string name="change_npin">Change\nPin</string>
+    <string name="forgot_pin">Forgot\nPin?</string>
+    <string name="call_support">Get Support</string>
+    <string name="utilities">Utilities</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="current_pin">Current Pin</string>
+    <string name="new_pin">New Pin</string>
+    <string name="confirm_new_pin">Confirm New Pin</string>
+    <string name="transaction_id">Transaction Id :</string>
+    <string name="recharge_id">Recharge Id :</string>
+    <string name="amount">Amount</string>
+    <string name="recharge_failed">Recharge Failed</string>
+    <string name="kyc_not_verified">KYC Not Verified</string>
+    <string name="verify_kyc">Verify KYC</string>
+    <string name="_12_digit_aadhaar_number">12 -Digit Aadhaar Number</string>
+    <string name="manage_users">Manage Users</string>
+    <string name="user_name">User Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="user_email">User Email</string>
+    <string name="user_address">User Address</string>
+    <string name="upload_aadhaar_card">Upload Aadhaar Card</string>
+    <string name="aadhaar_card">Aadhaar Card </string>
+    <string name="register">Register</string>
+    <string name="pay_bills">Pay Bills</string>
+    <string name="pay_your_bills_with_bbps">Pay your bills with BBPS</string>
+    <string name="services">Our Services</string>
+    <string name="mobile_npostpaid">Mobile Postpaid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="electricity">Electricity</string>
+    <string name="select_state">Select State</string>
+    <string name="select">Select</string>
+    <string name="select_board">Select Board</string>
+    <string name="enter_customer_number">Enter Customer Number</string>
+    <string name="proceed">Proceed</string>
+    <string name="pay_bill">Pay bill</string>
+    <string name="select_dth_operator">Select Dth Operator</string>
+    <string name="select_mobile_operator">Select Mobile Operator</string>
+    <string name="view_receipt">View Receipt</string>
+    <string name="done">Done</string>
+    <string name="fetch_bill">Fetch Bill</string>
+    <string name="or">OR</string>
+    <string name="submit">Submit</string>
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+    <string name="title_activity_cabs_map">Map</string>
+    <string name="authorization">Authorization</string>
+    <string name="error_mobile_number">Invalid Mobile Number</string>
+    <string name="error_password">Invalid Password</string>
+    <string name="content_type">Content-Type</string>
+    <string name="x_api_key">X-API-KEY</string>
+    <string name="error_internet">No Internet Connection</string>
+    <string name="btn_okay">OKAY</string>
+    <string name="error_invalid_email">Invalid Email</string>
+    <string name="invalid_aadhaar">Invalid Aadhaar Number</string>
+    <string name="error_invalid_address">Invalid Address</string>
+    <string name="error_invalid_name">Invalid Name</string>
+    <string name="scrern_sixe">SCREEN SIZE</string>
+    <string name="error_server_error">Oops! Something went wrong!</string>
+    <string name="error_api">Error of API</string>
+    <string name="response">Response</string>
+    <string name="error_expired_token">Expired token</string>
+    <string name="error_session_expired">Session Expired!</string>
+    <string name="error_please_login_again">Please Login Again</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="error_need_permission">You need to allow access permissions</string>
+    <string name="error_invalid_amount">Invalid Amount</string>
+    <string name="error_invalid_dth">Invalid DTH Number</string>
+    <string name="error_invalid_landline">Invalid Landline Number</string>
+    <string name="error_select_operator">Please Selefcft Operator</string>
+    <string name="view_balance">View Balance</string>
+    <string name="available_balance">Available Balance</string>
+    <string name="error_attention">Attention!!</string>
+    <string name="status">Status</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="select_date">Select Date</string>
+    <string name="launch">LAUNCH E-Digital MATM</string>
+    <string name="cyrusdmt">Cyrus DMT</string>
+    <string name="morpho_device">Morpho Device</string>
+    <string name="amount_debited">Amount \nDebited</string>
+    <string name="product">Product</string>
+    <string name="mantra_device">Mantra Device</string>
+    <string name="bank_account_number">Bank Account Number</string>
+    <string name="request_remarks">Request Remarks</string>
+    <string name="pan_number">Pan Number</string>
+    <string name="electricity_recharge">Electricity Recharge</string>
+    <string name="electricity_number">Electricity Consumer Number</string>
+    <string name="electricity_bill">Electricity \nBill</string>
+    <string name="enter_billing_unit">Enter Billing Unit</string>
+    <string name="select_circle">Select Circle</string>
+    <string name="note_optional">Note (Optional)</string>
+
+
+    <string-array name="arrayFingerCount">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="arrayFingerType">
+        <item>FMR</item>
+        <item>FIR</item>
+    </string-array>
+
+    <string-array name="arrayFingerFormat">
+        <item>XML</item>
+        <item>PROTOBUF</item>
+    </string-array>
+
+    <string-array name="arrayEnv">
+        <item>S</item>
+        <item>PP</item>
+        <item>P</item>
+    </string-array>
+
+    <string name="transaction_nhistory">Transaction\History</string>
+    <string name="wallet_nsummary">Wallet\nSummary</string>
+    <string name="don_t_have_account_sign_up"><font color='#000000'>Don\'t have account?</font><font color='#1F7BD6'> Sign UP</font></string>
+    <string name="already_have_account_sign_in"><font color='#000000'>Already have account?</font><font color='#1F7BD6'> Sign In</font></string>
+    <string name="forgot_string" tools:ignore="MissingTranslation">We will send you a One Time Password on your phone number</string>
+</resources>
