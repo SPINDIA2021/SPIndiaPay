@@ -5001,15 +5001,17 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
-                    jsonObject["txtPidData"] = txtPidData
-                    jsonObject["adhaarNumber"] = adhaarNumber
-                    jsonObject["nationalBankIdenticationNumber"] = nationalBankIdenticationNumber
+
+                    jsonObject["nationalbankidentification"] = nationalBankIdenticationNumber
                     jsonObject["mobileNumber"] = mobileNumber
-                    jsonObject["type"] = type
-                    jsonObject["transactionAmount"] = transactionAmount
-                    jsonObject["latitude"] = latitude
                     jsonObject["longitude"] = longitude
+                    jsonObject["latitude"] = latitude
+                    jsonObject["adhaarnumber"] = adhaarNumber
+                    jsonObject["rtid"] = cus_id
+                    jsonObject["fingerprintdata"] = txtPidData
+                    jsonObject["callfunctn"] = type
+                    jsonObject["transactionAmount"] = transactionAmount
+
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -5020,8 +5022,8 @@ class AppApiCalls(
                     val headers =
                         HashMap<String, String>()
                     headers[mContext.getString(R.string.content_type)] = FORM_URL_ENCODED
-                    headers[mContext.getString(R.string.x_api_key)] = API_KEY
-                    headers[mContext.getString(R.string.authorization)] = "$BASIC $BASIC_TOKEN"
+                  /*  headers[mContext.getString(R.string.x_api_key)] = API_KEY
+                    headers[mContext.getString(R.string.authorization)] = "$BASIC $BASIC_TOKEN"*/
                     return headers
                 }
             }

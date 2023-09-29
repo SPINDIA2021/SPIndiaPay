@@ -66,6 +66,7 @@
         <activity android:name=".dmt.AddBeneficiaryActivity" />
         <activity android:name=".recharge_services.MobilePostpaidActivity"/>
         <activity android:name=".recharge_services.MobilePrepaidActivity"/>
+        <activity android:name=".activities_aeps.twofactorAuthentication.AepsTwoFactorAuthenticationActivity"/>
         <activity
             android:name=".dmt.ViewDmtTransactionActivity"
             android:screenOrientation="portrait" />

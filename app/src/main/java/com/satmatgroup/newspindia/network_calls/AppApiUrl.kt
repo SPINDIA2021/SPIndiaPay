@@ -11,6 +11,8 @@ object AppApiUrl : AppConstants {
 
     var IMAGE_URL = "http://spindiabazaar.com/index.php"
 
+    var BASE_URL1 = "https://spindiapan.com"
+
     //API URLS
 
 
@@ -134,8 +136,11 @@ object AppApiUrl : AppConstants {
     val DUMMY_PID: String =
         BASE_URL + "/aeps/getPidData"
 
+    /*val AEPS_TRANSACTION: String =
+        BASE_URL + "/aeps/aepsapi"*/
+
     val AEPS_TRANSACTION: String =
-        BASE_URL + "/aeps/aepsapi"
+        BASE_URL1 + "/api/Aepstransection"
 
     val AEPS_PAYOUT: String =
         BASE_URL + "/aeps/submitPayout"

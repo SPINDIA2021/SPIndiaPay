@@ -32,6 +32,7 @@ import com.satmatgroup.newspindia.activities_aeps.AepsOnboardActivity
 import com.satmatgroup.newspindia.activities_aeps.AepsTransactionActivity
 import com.satmatgroup.newspindia.activities_aeps.CashDepositOtpActivity
 import com.satmatgroup.newspindia.activities_aeps.aepshistory.AepsTransactionActivityNew
+import com.satmatgroup.newspindia.activities_aeps.twofactorAuthentication.AepsTwoFactorAuthenticationActivity
 import com.satmatgroup.newspindia.activities_bbps.BbpsMainActivity
 import com.satmatgroup.newspindia.adapters_recyclerview.SliderAdapter
 import com.satmatgroup.newspindia.authentication.LoginActivity
@@ -943,6 +944,12 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             val intent = Intent(this, CategoryActivity::class.java)
             startActivity(intent)
 
+        }
+
+        rl_aepsRegistration.setOnClickListener {
+            val intent = Intent(this, AepsTwoFactorAuthenticationActivity::class.java)
+            intent.putExtra("from","aepstwofactorregistration")
+            startActivity(intent)
         }
 
         cvViewReportNew.setOnClickListener {
