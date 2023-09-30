@@ -51,7 +51,7 @@ class UserPayoutBankAdapter(
         val rechargeHistoryModal: UserPayoutBankModel =
             rechargeHistoryModalList[position]
 
-        holder.tvBankNamePayout.setText(rechargeHistoryModal.bankName+" - "+rechargeHistoryModal.bankAccount)
+        holder.tvBankNamePayout.setText(rechargeHistoryModal.getBankname()+" - "+rechargeHistoryModal.getAccount())
         holder.itemView.setOnClickListener { mListener.onClickAtOKButton(rechargeHistoryModal) }
     }
 

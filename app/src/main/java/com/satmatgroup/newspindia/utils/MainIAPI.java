@@ -2,6 +2,7 @@ package com.satmatgroup.newspindia.utils;
 
 
 import com.satmatgroup.newspindia.activities_aeps.twofactorAuthentication.BaseAUthRegistrationResponse;
+import com.satmatgroup.newspindia.payout.BaseUserPayoutBankModel;
 
 
 import okhttp3.MultipartBody;
@@ -30,6 +31,11 @@ public interface MainIAPI {
                                                        @Part("fingerprintdata") RequestBody fingerprintdata,
                                                        @Part("callfunctn") RequestBody callfunctn,
                                                        @Part("transactionAmount") RequestBody transactionAmount);
+
+    @Multipart
+    @POST("/api/Payouts")
+    Call<BaseUserPayoutBankModel> callUserPayoutAccountList(@Part("rtid") RequestBody rtid,
+                                                            @Part("callfunction") RequestBody callfunction);
 
 
 

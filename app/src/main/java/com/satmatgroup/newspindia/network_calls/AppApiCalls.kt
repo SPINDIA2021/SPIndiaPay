@@ -4918,7 +4918,8 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = cus_id
+                    jsonObject["callfunction"] = "accountlist"
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -4931,8 +4932,8 @@ class AppApiCalls(
                     val headers =
                         HashMap<String, String>()
                     headers[mContext.getString(R.string.content_type)] = FORM_URL_ENCODED
-                    headers[mContext.getString(R.string.x_api_key)] = API_KEY
-                    headers[mContext.getString(R.string.authorization)] = "$BASIC $BASIC_TOKEN"
+                  /*  headers[mContext.getString(R.string.x_api_key)] = API_KEY
+                    headers[mContext.getString(R.string.authorization)] = "$BASIC $BASIC_TOKEN"*/
                     return headers
                 }
             }

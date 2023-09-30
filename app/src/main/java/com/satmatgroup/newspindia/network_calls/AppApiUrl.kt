@@ -11,7 +11,7 @@ object AppApiUrl : AppConstants {
 
     var IMAGE_URL = "http://spindiabazaar.com/index.php"
 
-    var BASE_URL1 = "https://spindiapan.com"
+    var BASE_URL1 = "http://spindiapan.com"
 
     //API URLS
 
@@ -154,8 +154,10 @@ object AppApiUrl : AppConstants {
     val AEPSCOMMISSION_HISTORY: String =
         BASE_URL + "/aeps/aeps_history"
 
+    /*val USER_PAYOUT_BANK: String =
+        BASE_URL + "/aeps/userpayoutbank"*/
     val USER_PAYOUT_BANK: String =
-        BASE_URL + "/aeps/userpayoutbank"
+        BASE_URL1 + "/api/Payouts"
 
     //MICRO ATM
     val MICRO_ATM_TRANSACTION: String =

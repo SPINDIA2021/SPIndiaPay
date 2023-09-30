@@ -19,20 +19,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.satmatgroup.newspindia.NewMainActivity
 import com.satmatgroup.newspindia.R
 import com.satmatgroup.newspindia.model.UserModel
 import com.satmatgroup.newspindia.network_calls.AppApiCalls
-import com.satmatgroup.newspindia.utils.AppCommonMethods
-import com.satmatgroup.newspindia.utils.AppConstants
-import com.satmatgroup.newspindia.utils.AppPrefs
-import com.satmatgroup.newspindia.utils.toast
+import com.satmatgroup.newspindia.utils.*
 import kotlinx.android.synthetic.main.activity_payout.*
 import kotlinx.android.synthetic.main.activity_payout.view.*
 import kotlinx.android.synthetic.main.layout_dialog_changbank.*
 import kotlinx.android.synthetic.main.layout_list_bottomsheet_banklist.view.*
 import kotlinx.android.synthetic.main.layout_list_bottomsheet_users.view.*
 import kotlinx.android.synthetic.main.layout_list_bottomsheet_users.view.etSearchMobName
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListener,
     UserPayoutBankAdapter.ListAdapterListener {
@@ -62,8 +70,8 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
         getAccountDetails(userModel.cus_id)
-        userPayoutBank(userModel.cus_id)
-
+       // userPayoutBank(userModel.cus_id)
+        callServiceGetAccountDetails(userModel.cus_id)
 
 
         tvChangeBank.setOnClickListener {
@@ -300,7 +308,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
             if (status.contains("true")) {
                 progress_bar.visibility = View.GONE
                 // charge = jsonObject.getString("charge")
-                val response = jsonObject.getJSONArray("result")
+                val response = jsonObject.getJSONArray("data")
 
                 for (i in 0 until response.length()) {
                     val notifyObjJson = response.getJSONObject(i)
@@ -452,7 +460,6 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
 
         dialog.tvContactNumber.setOnClickListener {
-
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:" + tvContactNumber.text.toString())
             startActivity(intent)
@@ -463,14 +470,94 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
     override fun onClickAtOKButton(mobileRechargeModal: UserPayoutBankModel?) {
         if(mobileRechargeModal!=null) {
-            payout_bank_id = mobileRechargeModal.payout_bank_id
-            etAepsAccntNo.setText(mobileRechargeModal.bankAccount)
-            etAepsBankIfsc.setText(mobileRechargeModal.bankIFSC)
-            etAepsUserBank.setText(mobileRechargeModal.bankName)
-            etAepsUserName.setText(mobileRechargeModal.accountHolderName)
-            etConfirmAccount.setText(mobileRechargeModal.bankAccount)
+            payout_bank_id = mobileRechargeModal.getBeneid()!!
+            etAepsAccntNo.setText(mobileRechargeModal.getAccount())
+            etAepsBankIfsc.setText(mobileRechargeModal.getIfsc())
+            etAepsUserBank.setText(mobileRechargeModal.getBankname())
+            etAepsUserName.setText(mobileRechargeModal.getName())
+            etConfirmAccount.setText(mobileRechargeModal.getAccount())
         }
         bottomSheetDialogUsers?.dismiss()
+    }
+
+
+    private fun callServiceGetAccountDetails(cusId: String) {
+        progress_bar.visibility = VISIBLE
+        System.setProperty("http.keepAlive", "false")
+        val httpClient = OkHttpClient.Builder()
+        httpClient.readTimeout(5, TimeUnit.MINUTES).connectTimeout(5, TimeUnit.MINUTES)
+            .writeTimeout(5, TimeUnit.MINUTES).retryOnConnectionFailure(true)
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val builder = original.newBuilder()
+
+                //Request request = chain.request().newBuilder().addHeader("parameter", "value").build();
+                builder.header("Content-Type", "application/x-www-form-urlencoded")
+                val request = builder.method(original.method(), original.body())
+                    .build()
+                chain.proceed(request)
+            }
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+        val client = httpClient.build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MainIAPI.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
+
+        //creating the retrofit api service
+        val apiService = retrofit.create(MainIAPI::class.java)
+
+        val rtid= createPartFromString(cusId)
+        val callfunctn = createPartFromString("accountlist")
+
+
+        //Call<ScannerResponse> call = apiService.saveScan(orderId1,vpa1,name1,amount1,mon_no1,member_id1,password1);
+        val call = apiService.callUserPayoutAccountList(rtid, callfunctn)
+
+
+        //making the call to generate checksum
+        call.enqueue(object : Callback<BaseUserPayoutBankModel> {
+            override fun onResponse(
+                call: Call<BaseUserPayoutBankModel>,
+                response: Response<BaseUserPayoutBankModel>
+            ) {
+                progress_bar.visibility = GONE
+                if (response.body()!!.getStatus() == true) {
+                    progress_bar.visibility = GONE
+
+                    userPayoutBankModelArrayList= response.body()!!.getData()!!
+                } else {
+                    Toast.makeText(
+                        this@PayoutActivity,
+                        response.body()!!.getMessage(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent = Intent(this@PayoutActivity, NewMainActivity::class.java)
+                    //  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent)
+                }
+
+
+                //once we get the checksum we will initiailize the payment.
+                //the method is taking the checksum we got and the paytm object as the parameter
+            }
+
+            override fun onFailure(call: Call<BaseUserPayoutBankModel>, t: Throwable) {
+                progress_bar.visibility = GONE
+                // callServiceFalse(mobileNo);
+                Toast.makeText(this@PayoutActivity, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun createPartFromString(descriptionString: String): RequestBody {
+        return RequestBody.create(
+            MultipartBody.FORM, descriptionString
+        )
     }
 
 }

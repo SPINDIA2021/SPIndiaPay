@@ -256,7 +256,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
             case R.id.btnCapture:
                 try {
 
-                    String resutSend="<?xml version=\"1.0\"?>\n" +
+                   /* String resutSend="<?xml version=\"1.0\"?>\n" +
                             "<PidData>\n" +
                             "  <Resp errCode=\"0\" errInfo=\"Success.\" fCount=\"1\" fType=\"2\" nmPoints=\"56\" qScore=\"79\" />\n" +
                             "  <DeviceInfo dpId=\"MANTRA.MSIPL\" rdsId=\"MANTRA.WIN.001\" rdsVer=\"1.0.8\" mi=\"MFS100\" mc=\"MIIEGDCCAwCgAwIBAgIEAp9jADANBgkqhkiG9w0BAQsFADCB6jEqMCgGA1UEAxMhRFMgTUFOVFJBIFNPRlRFQ0ggSU5ESUEgUFZUIExURCAzMVUwUwYDVQQzE0xCLTIwMyBTaGFwYXRoIEhleGEgT3Bwb3NpdGUgR3VqYXJhdCBIaWdoIENvdXJ0IFMuRyBIaWdod2F5IEFobWVkYWJhZCAtMzgwMDYwMRIwEAYDVQQJEwlBSE1FREFCQUQxEDAOBgNVBAgTB0dVSkFSQVQxCzAJBgNVBAsTAklUMSUwIwYDVQQKExxNQU5UUkEgU09GVEVDSCBJTkRJQSBQVlQgTFREMQswCQYDVQQGEwJJTjAeFw0yMzA2MjkxMTUxNDZaFw0yMzA3MjkxMjA2NDRaMIGwMSUwIwYDVQQDExxNYW50cmEgU29mdGVjaCBJbmRpYSBQdnQgTHRkMR4wHAYDVQQLExVCaW9tZXRyaWMgTWFudWZhY3R1cmUxDjAMBgNVBAoTBU1TSVBMMRIwEAYDVQQHEwlBSE1FREFCQUQxEDAOBgNVBAgTB0dVSkFSQVQxCzAJBgNVBAYTAklOMSQwIgYJKoZIhvcNAQkBFhVzdXBwb3J0QG1hbnRyYXRlYy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDSLiVpmaVrvJnbSaKmf/aUSI8jcK3WI6+gKhSDF+KU8+MkupPdQ6KLBY3mOARkXca0r4CXyMu2W6e1PQ+5mtktR3Yh5PaJURhCXIjuFFrNVWWcH88IO7I4+pam+yS8NM0Gi4mXJBxXR5OqFkEoiCluPgJgIo7NeDGtwO6bxxd83YnjZGtJb6opxvQ/Xenft8ILp6IBNDnwUD4w1QhCKRUqnYKkwZuUf9dd7wLNMp3gqkdQoVjvQm3KhGC83kqdMiNu8Nb/pSwSdd9ntRd6L01LB9Leg7O/fNo1yfm0C5fyXyWQoeuVs/qTPZ4huUEaQChJERCijeitOSdg1iRzBUqfAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAAhRkqCRMQFG54oGpH7krmpcexg3hHPHCuTX2PkSNNenuzBnVz3yfHBih6uCtbJDQHHB8hqNHJi9r58IqsH16aZWkS+VpNuXWqxtuGds8Mk2XL3NZed9L9It7mvd+RegmU5NKXy0AZIcUjrm9maYGzDZWTAdO5mSkaqSEoCrZTWGc9fGAhuwRqIsEWknpommduf+cCP68x6vHzZuWVX/m8DJdOIUxDLi72EXHrWzqbF0UjHjKNuOCD6hmen/iVd9XCimWvTAxFHkntbyPHwNeJQPgqhTRRwP4kF8cvBU1SAEcr9UxI6qDbMakKHWi1r95nIP665WtepYIXVbZHYb7QM=\" dc=\"eaaaf4f5-8cdb-43e4-b92a-7fb1fa64f434\">\n" +
@@ -273,7 +273,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
 
                     callServiceSave(cus_id, resutSend, "418869728175", "",
                             "9799754037", transactionType, "", latitude,
-                            longitude);
+                            longitude);*/
                   /*  aepsTransaction(cus_id, resutSend, "418869728175", "",
                             "9799754037", transactionType, "", latitude,
                             longitude);*/
@@ -282,7 +282,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
 
 
 
-                   /* try {
+                    try {
                         Intent intent = new Intent();
                         intent.setAction("in.gov.uidai.rdservice.fp.INFO");
                         startActivityForResult(intent, 1);
@@ -301,7 +301,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
                         intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
                         intent2.putExtra("PID_OPTIONS", pidOption);
                         startActivityForResult(intent2, 2);
-                    }*/
+                    }
                 } catch (Exception e) {
                     Log.e("Error", e.toString());
                 }
@@ -1057,13 +1057,19 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
                     progress_bar.setVisibility(View.GONE);
                     //   Toast.makeText(this, "Result : "+status , Toast.LENGTH_SHORT).show();
 
-                    if (MantraDeviceActivity.this.transactionType.equals("aepstwofactorregistration"))
+                    if (transactionType.equals("aepstwofactorregistration"))
                     {
-                        Toast.makeText(MantraDeviceActivity.this, response.body().getAthRegistrationResponse().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(MantraDeviceActivity.this, AepsTwoFactorAuthenticationActivity.class);
-                        intent.putExtra("from","aepstwofactorauthentication");
-                        startActivity(intent);
-                    }else if (MantraDeviceActivity.this.transactionType.equals("aepstwofactorauthentication")){
+                        try{
+                            Toast.makeText(MantraDeviceActivity.this, response.body().getAthRegistrationResponse().getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(MantraDeviceActivity.this, AepsTwoFactorAuthenticationActivity.class);
+                            intent.putExtra("from","aepstwofactorauthentication");
+                            startActivity(intent);
+                        }catch (Exception e){
+                            Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }else if (transactionType.equals("aepstwofactorauthentication")){
                         Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(MantraDeviceActivity.this, NewMainActivity.class);
                         startActivity(intent);
