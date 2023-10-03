@@ -12,7 +12,7 @@
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/bg_loginmain" />
+        android:background="@drawable/bg_general"/>
 
 
     <RelativeLayout
@@ -50,7 +50,7 @@
         android:id="@+id/custToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:background="@drawable/bg_general"
         android:visibility="visible">
 
         <ImageView
@@ -73,11 +73,10 @@
 
         <ImageView
             android:id="@+id/ivMore"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_baseline_more_vert_24"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_30sdp"
-            />
+            android:layout_gravity="right"
+            android:src="@drawable/ic_baseline_more_vert_24" />
 
     </androidx.appcompat.widget.Toolbar>
 

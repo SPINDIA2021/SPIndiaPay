@@ -57,6 +57,7 @@ interface AppConstants {
         //API CONSTANTS
         const val STATUS = "status"
         const val RESULT = "result"
+        const val DATA = "data"
         const val MESSAGE = "message"
         const val MESS = "mess"
         const val TOKEN = "token"

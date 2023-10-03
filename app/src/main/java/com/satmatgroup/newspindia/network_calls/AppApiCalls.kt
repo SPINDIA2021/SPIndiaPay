@@ -126,9 +126,7 @@ import com.satmatgroup.newspindia.utils.AppConstants.Companion.TOKEN
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.TO_DATE
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.USER_NAME
 import com.satmatgroup.newspindia.utils.AppPrefs
-import com.satmatgroup.newspindia.utils.AppPrefs.putStringPref
 import org.json.JSONException
-import java.util.*
 
 
 class AppApiCalls(
@@ -4471,14 +4469,23 @@ class AppApiCalls(
                 }
             ) {
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
+              /*  override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
                     jsonObject["cus_id"] = cus_id
                     jsonObject["amount"] = amount
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
                     return jsonObject
+                }*/
+                override fun getParams(): Map<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["rtid"] = cus_id
+                    params["callfunction"] = "getcharge"
+                 //  params["bene_id"] = bene_id
+                    params["amount"] = amount
+                    return params
                 }
+
 
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String>? {
@@ -4753,7 +4760,7 @@ class AppApiCalls(
     fun aepsPayout(
         cus_id: String, bank_name: String, account_number: String,
         ifsc_code: String, account_holder_name: String, amount: String,
-        charge: String, type: String, payout_bank_id: String
+        charge: String, type: String, payout_bank_id: String,bene_id:String
     ) {
 
         val url: String = AEPS_PAYOUT
@@ -4787,7 +4794,7 @@ class AppApiCalls(
                 }
             ) {
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
+               /* override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
                     jsonObject["cus_id"] = cus_id
@@ -4802,6 +4809,15 @@ class AppApiCalls(
                     jsonObject["payout_bank_id"] = payout_bank_id
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
                     return jsonObject
+                }*/
+
+                override fun getParams(): Map<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["rtid"] = cus_id
+                    params["callfunction"] = "dotransaction"
+                    params["bene_id"] = bene_id
+                    params["amount"] = amount
+                    return params
                 }
 
                 @Throws(AuthFailureError::class)

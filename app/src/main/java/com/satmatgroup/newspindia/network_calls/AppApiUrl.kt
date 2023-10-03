@@ -121,8 +121,11 @@ object AppApiUrl : AppConstants {
         BASE_URL + "/dmt/getDmtApiList"
 
     //AEPS
+    /*val GET_AEPS_CHARGE: String =
+        BASE_URL + "/aeps/getCharge"*/
+
     val GET_AEPS_CHARGE: String =
-        BASE_URL + "/aeps/getCharge"
+        BASE_URL1 + "/api/Payouts"
 
     val AEPS_HISTORY: String =
         BASE_URL + "/aeps/aeps_history"
@@ -142,8 +145,11 @@ object AppApiUrl : AppConstants {
     val AEPS_TRANSACTION: String =
         BASE_URL1 + "/api/Aepstransection"
 
+  /*  val AEPS_PAYOUT: String =
+        BASE_URL + "/aeps/submitPayout"*/
+
     val AEPS_PAYOUT: String =
-        BASE_URL + "/aeps/submitPayout"
+        BASE_URL1 + "/api/Payouts"
 
     val GET_PAYOUT_DETAILS: String =
         BASE_URL + "/aeps/getPayoutDetails"

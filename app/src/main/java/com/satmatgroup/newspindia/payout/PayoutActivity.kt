@@ -58,6 +58,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
     var payout_bank_id = ""
     lateinit var dialog: Dialog
     var type = ""
+    lateinit var bene_id:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +70,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
         val gson = Gson()
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
-        getAccountDetails(userModel.cus_id)
+      //  getAccountDetails(userModel.cus_id)
        // userPayoutBank(userModel.cus_id)
         callServiceGetAccountDetails(userModel.cus_id)
 
@@ -165,12 +166,14 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
     private fun aepsPayout(
         cus_id: String, bank_name: String, account_number: String,
         ifsc_code: String, account_holder_name: String, amount: String,
-        charge: String, type: String, payout_bank_id: String
+        charge: String, type: String, payout_bank_id: String,bene_id:String
     ) {
 
         progress_bar.visibility = View.VISIBLE
 
-
+        var chargeDouble=charge.toDouble()+amount.toDouble()
+       var amountSend = chargeDouble.toString()
+       // Toast.makeText(this@PayoutActivity,amountSend.toString(),Toast.LENGTH_SHORT).show()
 
 
         if (AppCommonMethods(this).isNetworkAvailable) {
@@ -178,8 +181,8 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                 AppApiCalls(this, SEND_AEPS_PAYOUT, this)
             mAPIcall.aepsPayout(
                 cus_id, bank_name, account_number,
-                ifsc_code, account_holder_name, amount,
-                charge, type,payout_bank_id
+                ifsc_code, account_holder_name, amountSend,
+                charge, type,payout_bank_id,bene_id
             )
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -319,6 +322,15 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                         )
                     userPayoutBankModelArrayList.add(bankListModel)
 
+
+                    if (userPayoutBankModelArrayList.size!=0)
+                    {
+                        etAepsUserName.setText(userPayoutBankModelArrayList[0].getName())
+                        etAepsUserBank.setText(userPayoutBankModelArrayList[0].getBankname())
+                        etAepsAccntNo.setText(userPayoutBankModelArrayList[0].getAccount())
+                        etAepsBankIfsc.setText(userPayoutBankModelArrayList[0].getIfsc())
+                    }
+
                 }
                 //walletBalance(cus_id);
             } else {
@@ -340,16 +352,18 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
             if (status.contains("true")) {
                 progress_bar.visibility = GONE
 
-                val cast = jsonObject.getString("result")
+                val cast = jsonObject.getString("data")
+                val jsonObject1 = JSONObject(cast)
+                val amount=jsonObject1.getString("amount")
 
-                charge = cast
+                charge = amount
                 showConfirmDialog(type, charge)
 
 
                 //walletBalance(cus_id);
             } else {
-
-                val response = jsonObject.getString("result")
+                progress_bar.visibility = GONE
+                val response = jsonObject.getString("message")
                 Toast.makeText(this, "" + response, Toast.LENGTH_SHORT).show()
 
             }
@@ -421,14 +435,14 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                     userModel.cus_id, etAepsUserBank.text.toString(),
                     etAepsAccntNo.text.toString(), etAepsBankIfsc.text.toString(),
                     etAepsUserName.text.toString(), etAmountPay.text.toString(),
-                    charge, type,payout_bank_id
+                    charge, type,payout_bank_id,bene_id
                 )
             } else {
                 aepsPayout(
                     userModel.cus_id, "",
                     "", "",
                     "", etAmountPay.text.toString(),
-                    "0", type, ""
+                    "0", type, "",bene_id
                 )
             }
 
@@ -476,6 +490,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
             etAepsUserBank.setText(mobileRechargeModal.getBankname())
             etAepsUserName.setText(mobileRechargeModal.getName())
             etConfirmAccount.setText(mobileRechargeModal.getAccount())
+            bene_id= mobileRechargeModal.getBeneid()!!
         }
         bottomSheetDialogUsers?.dismiss()
     }
@@ -530,6 +545,16 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                     progress_bar.visibility = GONE
 
                     userPayoutBankModelArrayList= response.body()!!.getData()!!
+
+                    if (userPayoutBankModelArrayList.size!=0)
+                    {
+                        etAepsUserName.setText(userPayoutBankModelArrayList[0].getName())
+                        etAepsUserBank.setText(userPayoutBankModelArrayList[0].getBankname())
+                        etAepsAccntNo.setText(userPayoutBankModelArrayList[0].getAccount())
+                        etAepsBankIfsc.setText(userPayoutBankModelArrayList[0].getIfsc())
+
+                        bene_id= userPayoutBankModelArrayList[0].getBeneid()!!
+                    }
                 } else {
                     Toast.makeText(
                         this@PayoutActivity,
