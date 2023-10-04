@@ -49,13 +49,13 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        getBalanceApi(userModel.cus_mobile)
+        getBalanceApi(userModel.mobile)
 
-        if (userModel.cus_type.equals("distributor")) {
+        if (userModel.logintype.equals("distributor")) {
             tvRequestTo.setText("Request Funds to - " + "Master".toUpperCase())
             req_to = "master"
 
-        } else if (userModel.cus_type.equals("retailer")) {
+        } else if (userModel.logintype.equals("retailer")) {
             tvRequestTo.setText("Request Funds to - " + "Distributor".toUpperCase())
             req_to = "distributor"
 
@@ -72,17 +72,16 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
             } else {
 
                 fundReqeuest(
-                    userModel.cus_id,
+                    userModel.rtid,
                     req_to,
                     etRequestAmount.text.toString(),
                     "bank",
                     etRequestAmount.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
             }
         }
@@ -90,13 +89,13 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
     }
 
     private fun fundReqeuest(
-        cus_id: String,
+        rtid: String,
         req_to: String,
         amount: String,
         bank: String,
         refrenceNumber: String,
         deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -104,7 +103,7 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
             val mAPIcall =
                 AppApiCalls(this, FUNDREQUEST, this)
             mAPIcall.fundRequestApi(
-                cus_id,
+                rtid,
                 req_to,
                 amount,
                 bank,
@@ -113,8 +112,8 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
                 deviceName,
                 pin,
                 pass,
-                cus_mobile,
-                cus_type
+                mobile,
+                logintype
             )
         } else {
 
@@ -216,7 +215,7 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
 
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -226,7 +225,7 @@ class RequestFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteL
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             toast(getString(R.string.error_internet))

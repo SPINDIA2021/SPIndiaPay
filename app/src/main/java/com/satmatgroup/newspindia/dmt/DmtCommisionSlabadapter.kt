@@ -52,11 +52,11 @@ class DmtCommisionSlabadapter(
         holder.tvType.text = ""+rechargeHistoryModal.type
 
 
-        if(userModel.cus_type.equals("retailer")) {
+        if(userModel.logintype.equals("retailer")) {
             holder.tvCommission.text = ""+rechargeHistoryModal.retailer_comm
-        } else if (userModel.cus_type.equals("distributor")) {
+        } else if (userModel.logintype.equals("distributor")) {
             holder.tvCommission.text = ""+rechargeHistoryModal.distributor_comm
-        } else if (userModel.cus_type.equals("master")) {
+        } else if (userModel.logintype.equals("master")) {
             holder.tvCommission.text = ""+rechargeHistoryModal.master_comm
         }
 

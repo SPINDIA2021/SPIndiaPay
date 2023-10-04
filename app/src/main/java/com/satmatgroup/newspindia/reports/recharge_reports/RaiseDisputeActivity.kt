@@ -91,16 +91,16 @@ class RaiseDisputeActivity : AppCompatActivity(), StringBottomAdapter.ListAdapte
             } else {
 
                 raiseDispute(
-                    userModel.cus_id,
+                    userModel.rtid,
                     recentRechargeHistoryModal.recid.toString(),
                     tvIssue.text.toString(),
                     etSubject.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile,
+                    userModel.logintype
                 )
             }
         }
@@ -136,11 +136,11 @@ class RaiseDisputeActivity : AppCompatActivity(), StringBottomAdapter.ListAdapte
 
 
     private fun raiseDispute(
-        cus_id: String,
+        rtid: String,
         recid: String,
         issue: String,
         subject: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -148,12 +148,12 @@ class RaiseDisputeActivity : AppCompatActivity(), StringBottomAdapter.ListAdapte
             val mAPIcall =
                 AppApiCalls(this, RAISEDISPUTE, this)
             mAPIcall.raiseDisputeApi(
-                cus_id,
+                rtid,
                 recid,
                 issue,
                 subject,
                 deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                pass, mobile, logintype
             )
         } else {
 

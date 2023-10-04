@@ -1,9 +1,9 @@
 package com.satmatgroup.newspindia.model
 
 data class LedgerReportModel(
-    val cus_mobile: String,
+    val mobile: String,
     val cus_name: String,
-    val cus_type: String,
+    val logintype: String,
     val txn_agentid: String,
     val txn_clbal: String,
     val txn_crdt: String,

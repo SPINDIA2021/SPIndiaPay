@@ -122,7 +122,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 toast("Invalid Operator")
             } else {
                 verifyPin(
-                    userModel.cus_mobile,
+                    userModel.mobile,
                     AppPrefs.getStringPref("AppPassword",this).toString()
                 )
             //confirmPin()
@@ -178,7 +178,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
     }
 
     private fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -189,7 +189,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 CONFIRMPIN_API,
                 this
             )
-            mAPIcall.verifyPin(cus_mobile, pin)
+            mAPIcall.verifyPin(mobile, pin)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -197,7 +197,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
     }
 
     private fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -210,7 +210,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 CHECKSAMERECHARGE_API,
                 this
             )
-            mAPIcall.checkIfSameRecharge(cus_id, rec_mobile, amount, operator)
+            mAPIcall.checkIfSameRecharge(rtid, rec_mobile, amount, operator)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -219,11 +219,11 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
 
 
     private fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
         billingUnit: String,
         circle_code: String
     ) {
@@ -235,7 +235,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 RECHARGE_API,
                 this
             )
-            mAPIcall.rechargeApiElectricity(cus_id, rec_mobile, amount, operator, cus_type, billingUnit, circle_code)
+            mAPIcall.rechargeApiElectricity(rtid, rec_mobile, amount, operator, logintype, billingUnit, circle_code)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -302,8 +302,8 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 progress_bar.visibility = View.INVISIBLE
 
                 rechargeApi(
-                    userModel.cus_id, etElectricityNumber.text.toString(), etAmountElect.text.toString(),
-                    operator_code, userModel.cus_type, etElectricityBillingUnit.text.toString(), circle_code
+                    userModel.rtid, etElectricityNumber.text.toString(), etAmountElect.text.toString(),
+                    operator_code, userModel.logintype, etElectricityBillingUnit.text.toString(), circle_code
                 )
                 //toast("Same Recharge")
             } else {
@@ -395,7 +395,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 progress_bar.visibility = View.INVISIBLE
 
                 checkIfSameRecharge(
-                    userModel.cus_id, etElectricityNumber.text.toString(), etAmountElect.text.toString(),
+                    userModel.rtid, etElectricityNumber.text.toString(), etAmountElect.text.toString(),
                     operator_code
                 )
                 //dialog.dismiss()
@@ -530,7 +530,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
         ) { dialog, id ->
             //confirmPin()
             verifyPin(
-                userModel.cus_mobile,
+                userModel.mobile,
                 AppPrefs.getStringPref("AppPassword",this).toString()
             )
             dialog.cancel()
@@ -690,7 +690,7 @@ class ElectricityRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCo
                 dialog.etPin.setError("Please Enter Pin")
             } else {
                 verifyPin(
-                    userModel.cus_mobile,
+                    userModel.mobile,
                     AppPrefs.getStringPref("AppPassword",this).toString()
                 )
                 dialog.dismiss()

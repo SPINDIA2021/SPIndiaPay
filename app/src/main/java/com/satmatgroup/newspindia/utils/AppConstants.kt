@@ -52,7 +52,7 @@ interface AppConstants {
         const val NEWS = "news"
         const val BANNER = "banner"
         const val CUS_DATA = "cusData"
-        const val CUS_MOBILE = "mobile"
+        const val mobile = "mobile"
 
         //API CONSTANTS
         const val STATUS = "status"
@@ -75,15 +75,15 @@ interface AppConstants {
         const val DEVICE_NAME = "deviceName"
         const val DEVICE_ID = "deviceId"
 
-        const val CUS_MOBILE_API = "cus_mobile"
-        const val CUS_ID = "cus_id"
+        const val CUS_MOBILE_API = "mobile"
+        const val rtid = "rtid"
         const val OPERATOR_TYPE = "operator_type"
         const val AMOUNT = "amount"
         const val REC_MOBILE = "recmobile"
         const val OPERATOR = "operator"
         const val PIN = "pin"
         const val MOBILE_RECHARGE = "mobile"
-        const val CUS_TYPE = "cus_type"
+        const val logintype = "logintype"
         const val FROM_DATE = "fromDate"
         const val TO_DATE = "toDate"
         const val DATE = "date"

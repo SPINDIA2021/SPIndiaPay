@@ -7,7 +7,7 @@ data class PayoutHistoryModel(
     val bankIFSC: String,
     val bankName: String,
     val charge: String,
-    val cus_id: String,
+    val rtid: String,
     val pay_req_id: String,
     val request_date: String,
     val status: String

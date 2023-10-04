@@ -76,7 +76,7 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
 
             val amount: String = et_ammount.getText().toString()+".00"
             val upi: String = upiid!!
-            val name: String = userModel.cus_name
+            val name: String = userModel.name
             val desc: String = "Payment"
             // on below line we are validating our text field.
             // on below line we are validating our text field.
@@ -113,15 +113,15 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
         userModel = gson.fromJson(json, UserModel::class.java)
 
         getUpi(
-            userModel.cus_id, AppPrefs.getStringPref("deviceId", this).toString(),
+            userModel.rtid, AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
         )
 
-        getBalanceApi(userModel.cus_mobile)
-//        tvUserNameNumber.setText("Transferring money to:\n${userModel.cus_name} (${userModel.cus_mobile}) ")
+        getBalanceApi(userModel.mobile)
+//        tvUserNameNumber.setText("Transferring money to:\n${userModel.cus_name} (${userModel.mobile}) ")
 
 
         singleton = Singleton2.getInstance()
@@ -168,14 +168,14 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
                         if (transactionDetails.status!!.toLowerCase() == "success") {
 
                             addFundsApi(
-                                userModel.cus_id, et_ammount.text.toString(), "UPI Payment",
+                                userModel.rtid, et_ammount.text.toString(), "UPI Payment",
                                 transactionDetails.getTransactionId().toString(),
                                 transactionDetails.getTransactionRefId().toString(),
                                 AppPrefs.getStringPref("deviceId", this).toString(),
                                 AppPrefs.getStringPref("deviceName", this).toString(),
-                                userModel.cus_pin,
-                                userModel.cus_pass,
-                                userModel.cus_mobile, userModel.cus_type
+                                "",
+                                "",
+                                userModel.mobile, userModel.logintype
                             )
                             transactionId = transactionDetails.getTransactionId().toString()
                             txnRef = transactionDetails.getTransactionRefId().toString()
@@ -357,22 +357,22 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
 
     //Api functions
     fun getUpi(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, GETUPIAPI, this)
-            mAPIcall.getUpi(cus_id, deviceId, deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.getUpi(rtid, deviceId, deviceName, pin, pass, mobile, logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun getBalanceApi(cus_id: String) {
+    private fun getBalanceApi(rtid: String) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
@@ -381,7 +381,7 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -526,12 +526,12 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
     }
 
     private fun addFundsApi(
-        cus_id: String,
+        rtid: String,
         amount: String,
         bank: String,
         transactionId: String,
         txnRef: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -539,8 +539,8 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
             val mAPIcall =
                 AppApiCalls(this, UPDATE_BALANCE, this)
             mAPIcall.addFundsApi(
-                cus_id, amount, bank, transactionId, txnRef, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                rtid, amount, bank, transactionId, txnRef, deviceId, deviceName, pin,
+                pass, mobile, logintype
             )
         } else {
 
@@ -584,14 +584,14 @@ class AddMoneyActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
             if (transactionDetails.status!!.toLowerCase() == "success") {
 
                 addFundsApi(
-                    userModel.cus_id, et_ammount.text.toString(), "UPI Payment",
+                    userModel.rtid, et_ammount.text.toString(), "UPI Payment",
                     transactionDetails.getTransactionId().toString(),
                     transactionDetails.getTransactionRefId().toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
                 transactionId = transactionDetails.getTransactionId().toString()
                 txnRef = transactionDetails.getTransactionRefId().toString()

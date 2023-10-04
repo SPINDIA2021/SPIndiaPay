@@ -42,31 +42,31 @@ class SupportActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         userModel = gson.fromJson(json, UserModel::class.java)
 
 
-        contactUs(userModel.cus_id,AppPrefs.getStringPref("deviceId", this).toString(),
+        contactUs(userModel.rtid,AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName",this ).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile,userModel.cus_type)
+            "",
+            "",
+            userModel.mobile, userModel.logintype)
 
 
     }
 
 
     fun contactUs(
-        cus_id : String,
+        rtid : String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, CONTACTUS, this)
-            mAPIcall.contactUsApi(cus_id ,deviceId,deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.contactUsApi(rtid ,deviceId,deviceName, pin, pass, mobile, logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()

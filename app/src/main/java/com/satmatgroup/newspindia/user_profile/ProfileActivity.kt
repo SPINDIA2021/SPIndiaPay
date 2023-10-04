@@ -62,7 +62,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         val gson = Gson()
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
-        getProfileApi(userModel.cus_mobile)
+        getProfileApi(userModel.mobile)
 
         deviceId = AppCommonMethods.getDeviceId(this)
         deviceNameDet = AppCommonMethods.getDeviceName()
@@ -99,11 +99,11 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             otp = java.lang.String.format("%06d", r.nextInt(999999))
             Log.d("OTP", otp)
             sendSmsforPin(
-                userModel.cus_mobile, otp, AppPrefs.getStringPref("deviceId", this).toString(),
+                userModel.mobile, otp, AppPrefs.getStringPref("deviceId", this).toString(),
                 AppPrefs.getStringPref("deviceName", this).toString(),
-                userModel.cus_pin,
-                userModel.cus_pass,
-                userModel.cus_mobile, userModel.cus_type
+                "",
+                "",
+                userModel.mobile, userModel.logintype
             )
         }
   }
@@ -111,14 +111,14 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
     fun sendSmsforPin(
         mobile: String, otp: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, cus_mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, SEND_OTP, this)
-            mAPIcall.getpinotp(mobile, otp, deviceId, deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.getpinotp(mobile, otp, deviceId, deviceName, pin, pass, cus_mobile, logintype)
         } else {
 
             toast("No Internet Connection")
@@ -127,10 +127,10 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     }
 
     fun forgetpin(
-        cus_id: String,
+        rtid: String,
         deviceId: String,
         deviceName: String,
-        cus_type: String
+        logintype: String
 
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -138,7 +138,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, FORGET_PIN, this)
-            mAPIcall.forgetpin(cus_id, deviceId, deviceName, cus_type)
+            mAPIcall.forgetpin(rtid, deviceId, deviceName, logintype)
         } else {
 
             toast("No Internet Connection")
@@ -179,13 +179,14 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
                 //Code after validation
                 changePassword(
-                    userModel.cus_id.toString(),
+                    userModel.rtid.toString(),
                     dialog.etCurrentPassword.text.toString(),
                     dialog.etConfirmNewPassword.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin, userModel.cus_pass, userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "", userModel.mobile,
+                    userModel.logintype
 
                 )
             }
@@ -224,12 +225,13 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
                 //Code after validation
                 changePin(
-                    userModel.cus_id,
+                    userModel.rtid,
                     dialog.etCurrentPin.text.toString(),
                     dialog.etConfirmNewPin.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin, userModel.cus_pass, userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "", userModel.mobile, userModel.logintype
                 )
             }
         }
@@ -241,7 +243,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
     //API CALL FUNCTION DEFINITION
     private fun getProfileApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
@@ -250,7 +252,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 AppConstants.PROFILE_API,
                 this
             )
-            mAPIcall.getProfile(cus_id)
+            mAPIcall.getProfile(rtid)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -260,9 +262,9 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
     //API CALL FUNCTION DEFINITION
     private fun changePassword(
-        cus_id: String, current_pass: String, new_pass: String,
+        rtid: String, current_pass: String, new_pass: String,
         deviceId: String, deviceName: String, pin: String, pass: String,
-        cus_mobile: String, cus_type: String
+        mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -270,15 +272,15 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             val mAPIcall =
                 AppApiCalls(this, CHANGEPASSWORD_API, this)
             mAPIcall.changePassword(
-                cus_id,
+                rtid,
                 current_pass,
                 new_pass,
                 deviceId,
                 deviceName,
                 pin,
                 pass,
-                cus_mobile,
-                cus_type
+                mobile,
+                logintype
             )
         } else {
 
@@ -288,9 +290,9 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
     //API CALL FUNCTION DEFINITION
     private fun changePin(
-        cus_id: String, current_pin: String, new_pin: String,
+        rtid: String, current_pin: String, new_pin: String,
         deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -298,8 +300,8 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             val mAPIcall =
                 AppApiCalls(this, CHANGEPIN_API, this)
             mAPIcall.changePin(
-                cus_id, current_pin, new_pin, deviceId, deviceName,
-                pin, pass, cus_mobile, cus_type
+                rtid, current_pin, new_pin, deviceId, deviceName,
+                pin, pass, mobile, logintype
             )
         } else {
 
@@ -340,10 +342,10 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                     tvKycVerified.visibility = View.VISIBLE
                 }
 
-                tvProfileUserName.text = userModel.cus_name
-                tvProfileCustType.text = userModel.cus_type
-                tvProfileEmail.text = userModel.cus_email
-                tvProfileMobileNumber.text = jsonObject.getString(AppConstants.CUS_MOBILE)
+                tvProfileUserName.text = userModel.name
+                tvProfileCustType.text = userModel.logintype
+                tvProfileEmail.text = userModel.email
+                tvProfileMobileNumber.text = jsonObject.getString(AppConstants.mobile)
                 /*     Glide.with(this)
                          .load(userModel.profile_img)
                          .into(ivProfileImage)
@@ -370,7 +372,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 val cast = jsonObject.getJSONArray("result")
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    val cust_id = notifyObjJson.getString("cus_id")
+                    val cust_id = notifyObjJson.getString("rtid")
                     Log.e("id", cust_id)
                     userModel = Gson()
                         .fromJson(notifyObjJson.toString(), UserModel::class.java)
@@ -399,7 +401,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 val cast = jsonObject.getJSONArray("result")
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    val cust_id = notifyObjJson.getString("cus_id")
+                    val cust_id = notifyObjJson.getString("rtid")
                     Log.e("id", cust_id)
                     userModel = Gson()
                         .fromJson(notifyObjJson.toString(), UserModel::class.java)
@@ -481,7 +483,7 @@ class ProfileActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 dialog.etOtp.requestFocus()
                 dialog.etOtp.setError("Please Enter Valid OTP")
             } else {
-                forgetpin(userModel.cus_id, deviceId, deviceNameDet, userModel.cus_type)
+                forgetpin(userModel.rtid, deviceId, deviceNameDet, userModel.logintype)
                 dialog.dismiss()
 
             }

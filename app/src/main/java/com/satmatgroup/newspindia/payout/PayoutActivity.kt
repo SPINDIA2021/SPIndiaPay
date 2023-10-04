@@ -70,9 +70,9 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
         val gson = Gson()
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
-      //  getAccountDetails(userModel.cus_id)
-       // userPayoutBank(userModel.cus_id)
-        callServiceGetAccountDetails(userModel.cus_id)
+      //  getAccountDetails(userModel.rtid)
+       // userPayoutBank(userModel.rtid)
+        callServiceGetAccountDetails(userModel.rtid)
 
 
         tvChangeBank.setOnClickListener {
@@ -123,7 +123,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
                 } else {
 
-                    getCharge(userModel.cus_id, etAmountPay.text.toString())
+                    getCharge(userModel.rtid, etAmountPay.text.toString())
 
                 }
 
@@ -140,23 +140,23 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
         }
     }
 
-    private fun getCharge(cus_id: String, amount: String) {
+    private fun getCharge(rtid: String, amount: String) {
         progress_bar.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, GET_AEPS_CHARGE, this)
-            mAPIcall.getAepsCharge(cus_id, amount)
+            mAPIcall.getAepsCharge(rtid, amount)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun userPayoutBank(cus_id: String) {
+    private fun userPayoutBank(rtid: String) {
         progress_bar.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, USER_PAYOUT_BANK, this)
-            mAPIcall.userPayoutBank(cus_id)
+            mAPIcall.userPayoutBank(rtid)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
@@ -164,7 +164,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
 
     private fun aepsPayout(
-        cus_id: String, bank_name: String, account_number: String,
+        rtid: String, bank_name: String, account_number: String,
         ifsc_code: String, account_holder_name: String, amount: String,
         charge: String, type: String, payout_bank_id: String,bene_id:String
     ) {
@@ -180,7 +180,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
             val mAPIcall =
                 AppApiCalls(this, SEND_AEPS_PAYOUT, this)
             mAPIcall.aepsPayout(
-                cus_id, bank_name, account_number,
+                rtid, bank_name, account_number,
                 ifsc_code, account_holder_name, amountSend,
                 charge, type,payout_bank_id,bene_id
             )
@@ -232,13 +232,13 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
 
     private fun getAccountDetails(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, GET_ACCOUNT_DETAILS, this)
-            mAPIcall.aepsPayountAccountDetails(cus_id)
+            mAPIcall.aepsPayountAccountDetails(rtid)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
@@ -255,7 +255,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                 progress_bar.visibility = View.GONE
                 val response = jsonObject.getString("message")
                 showSuccessRechargeDialog(response, etAmountPay.text.toString(), charge)
-                //walletBalance(cus_id);
+                //walletBalance(rtid);
             } else {
                 val response = jsonObject.getString("message")
                 showSuccessRechargeDialog(response, etAmountPay.text.toString(), charge)
@@ -277,8 +277,8 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
                 for (i in 0 until response.length()) {
                     val notifyObjJson = response.getJSONObject(i)
-                    val cus_id = notifyObjJson.getString("cus_id")
-                    Log.e("cus_id ", cus_id)
+                    val rtid = notifyObjJson.getString("rtid")
+                    Log.e("rtid ", rtid)
                     val aepsmodel = Gson()
                         .fromJson(
                             notifyObjJson.toString(),
@@ -291,7 +291,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                     etAepsBankIfsc.setText(aepsmodel.aeps_bankIfscCode)
 
                 }
-                //walletBalance(cus_id);
+                //walletBalance(rtid);
             } else {
                 val response = jsonObject.getString("message")
                 toast(response)
@@ -332,7 +332,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                     }
 
                 }
-                //walletBalance(cus_id);
+                //walletBalance(rtid);
             } else {
                 val response = jsonObject.getString("message")
                 toast(response)
@@ -360,7 +360,7 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
                 showConfirmDialog(type, charge)
 
 
-                //walletBalance(cus_id);
+                //walletBalance(rtid);
             } else {
                 progress_bar.visibility = GONE
                 val response = jsonObject.getString("message")
@@ -432,14 +432,14 @@ class PayoutActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListene
 
             if (type.equals("payoutToBank")) {
                 aepsPayout(
-                    userModel.cus_id, etAepsUserBank.text.toString(),
+                    userModel.rtid, etAepsUserBank.text.toString(),
                     etAepsAccntNo.text.toString(), etAepsBankIfsc.text.toString(),
                     etAepsUserName.text.toString(), etAmountPay.text.toString(),
                     charge, type,payout_bank_id,bene_id
                 )
             } else {
                 aepsPayout(
-                    userModel.cus_id, "",
+                    userModel.rtid, "",
                     "", "",
                     "", etAmountPay.text.toString(),
                     "0", type, "",bene_id

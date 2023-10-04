@@ -56,11 +56,11 @@ class CommissionSlabActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         userModel = gson.fromJson(json, UserModel::class.java)
 
         commisionApi(
-            userModel.cus_id,AppPrefs.getStringPref("deviceId", this).toString(),
+            userModel.rtid,AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName",this ).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile,userModel.cus_type
+            "",
+            "",
+            userModel.mobile,userModel.logintype
         )
         custToolbar.ivMore.setOnClickListener {
             val popup = PopupMenu(this@CommissionSlabActivity, ivMore)
@@ -80,16 +80,16 @@ class CommissionSlabActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
     }
 
     private fun commisionApi(
-        cus_id: String,deviceId:String,deviceName :String,pin :String,
-        pass : String,cus_mobile : String,cus_type :String
+        rtid: String,deviceId:String,deviceName :String,pin :String,
+        pass : String,mobile : String,logintype :String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, COMMISION_SLAB, this)
-            mAPIcall.commisionSlab(cus_id,deviceId ,deviceName,pin,
-                pass,cus_mobile,cus_type)
+            mAPIcall.commisionSlab(rtid,deviceId ,deviceName,pin,
+                pass,mobile,logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -110,8 +110,8 @@ class CommissionSlabActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
 
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    val cus_id = notifyObjJson.getString("cus_id")
-                    Log.e("cus_id ", cus_id)
+                    val rtid = notifyObjJson.getString("rtid")
+                    Log.e("rtid ", rtid)
                     val rechargeHistoryModal = Gson()
                         .fromJson(
                             notifyObjJson.toString(),
@@ -143,11 +143,11 @@ class CommissionSlabActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
             R.id.action_refresh -> {
-                commisionApi(userModel.cus_id,AppPrefs.getStringPref("deviceId", this).toString(),
+                commisionApi(userModel.rtid,AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName",this ).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile,userModel.logintype
 
                 )
 

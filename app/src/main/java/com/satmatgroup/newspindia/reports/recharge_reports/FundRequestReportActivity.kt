@@ -57,16 +57,16 @@ class FundRequestReportActivity : AppCompatActivity(), PopupMenu.OnMenuItemClick
         tvSelectFromDate.text = dateInString
         tvSelectToDate.text = dateInString
         fundRequestHistory(
-            userModel.cus_id, AppCommonMethods.convertDateFormat(
+            userModel.rtid, AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy", "yyyy-MM-dd", tvSelectFromDate.text.toString()
             ).toString(), AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy", "yyyy-MM-dd", tvSelectToDate.text.toString()
             ).toString(),
             AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
 
 
         )
@@ -136,17 +136,17 @@ class FundRequestReportActivity : AppCompatActivity(), PopupMenu.OnMenuItemClick
     }
 
     private fun fundRequestHistory(
-        cus_id: String, fromdate: String, todate: String,
+        rtid: String, fromdate: String, todate: String,
         deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, LEDGER_REPORT, this)
-            mAPIcall.fundRequestHistory(cus_id, fromdate, todate,deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type)
+            mAPIcall.fundRequestHistory(rtid, fromdate, todate,deviceId, deviceName, pin,
+                pass, mobile, logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -168,8 +168,8 @@ class FundRequestReportActivity : AppCompatActivity(), PopupMenu.OnMenuItemClick
 
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    val cus_id = notifyObjJson.getString("cus_id")
-                    Log.e("cus_id ", cus_id)
+                    val rtid = notifyObjJson.getString("rtid")
+                    Log.e("rtid ", rtid)
                     val fundRequestModel = Gson()
                         .fromJson(
                             notifyObjJson.toString(),
@@ -215,16 +215,16 @@ class FundRequestReportActivity : AppCompatActivity(), PopupMenu.OnMenuItemClick
             if (convertedDate2.after(convertedDate) || convertedDate2.equals(convertedDate)) {
                 fundRequestReportArraylist = ArrayList()
                 fundRequestHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", date
                     ).toString(), AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", dateafter
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
                 rvFundRequestReport.apply {
 
@@ -255,16 +255,16 @@ class FundRequestReportActivity : AppCompatActivity(), PopupMenu.OnMenuItemClick
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 fundRequestHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", tvSelectFromDate.text.toString()
                     ).toString(), AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", tvSelectToDate.text.toString()
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
 
 
                 )

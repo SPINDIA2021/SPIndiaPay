@@ -143,7 +143,7 @@ class AepsTwoFactorAuthenticationActivity : AppCompatActivity(), BankAepsListAda
                 bundle.putString("latitude", latitudeLabel);
                 bundle.putString("longitude", longitudeLabel);
                 bundle.putString("flag", "aeps")
-                bundle.putString("cus_id", userModel.cus_mobile)
+                bundle.putString("rtid", userModel.rtid)
                 bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
                 bundle.putString(
                     "nationalBankIdenticationNumber",
@@ -171,7 +171,7 @@ class AepsTwoFactorAuthenticationActivity : AppCompatActivity(), BankAepsListAda
             bundle.putString("latitude",latitudeLabel);
             bundle.putString("longitude",longitudeLabel);
             bundle.putString("flag","aeps")
-            bundle.putString("cus_id", userModel.cus_mobile)
+            bundle.putString("rtid", userModel.mobile)
             bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
             bundle.putString(
                 "nationalBankIdenticationNumber",

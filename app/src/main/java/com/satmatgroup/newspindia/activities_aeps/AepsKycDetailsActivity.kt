@@ -166,7 +166,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 val intent = Intent(applicationContext, HostActivity::class.java)
                 intent.putExtra("pId", partnerId)//partner Id provided in credential
                 intent.putExtra("pApiKey", partnerKey)//JWT API Key provided in credential
-                intent.putExtra("mCode", userModel.cus_id)//Merchant Code
+                intent.putExtra("mCode", userModel.rtid)//Merchant Code
                 intent.putExtra("mobile", merchant_mobile)// merchant mobile number
                 intent.putExtra("lat", latitude)
                 intent.putExtra("lng", longitude)
@@ -175,7 +175,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, 999)
 
-           /*     onBoardKycApi(userModel.cus_id,latitude,longitude,merchant_name,merchant_mobile,
+           /*     onBoardKycApi(userModel.rtid,latitude,longitude,merchant_name,merchant_mobile,
                     company_legal_name, company_marketing_name,merchant_email,pincode,city,district,
                     state,merchant_address,etPanNumber.text.toString(),etAadharNumber.text.toString(),
                     etGstNumber.text.toString(),etCompanyShopPanNumber.text.toString(),
@@ -190,7 +190,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
 
     //API CALL FUNCTION DEFINITION
     private fun onBoardKycApi(
-        cus_id: String,
+        rtid: String,
         latitude: String,
         longitude: String,
         merchantName: String,
@@ -222,7 +222,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
             val mAPIcall =
                 AppApiCalls(this, KYC_ONBOARD, this)
             mAPIcall.kycOnBoarding(
-                cus_id, latitude, longitude, merchantName, merchantPhoneNumber,
+                rtid, latitude, longitude, merchantName, merchantPhoneNumber,
                 companyLegalName, companyMarketingName, emailId, merchantPinCode, merchantCityName,
                 merchantDistrictName, merchantState, merchantAddress, userPan, aadhaarNumber,
                 gstInNumber, companyOrShopPan, companyBankAccountNumber, bankIfscCode,
@@ -237,28 +237,28 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
 
     private fun validateekycotp(
         otp: String,
-        cus_id: String
+        rtid: String
     ) {
         progress_bar_kyc.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, VALIDATE_OTP, this)
-            mAPIcall.validateekycotp(otp, cus_id)
+            mAPIcall.validateekycotp(otp, rtid)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun resendekycotp(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar_kyc.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, RESEND_OTP, this)
-            mAPIcall.resendekycotp(cus_id)
+            mAPIcall.resendekycotp(rtid)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
@@ -492,7 +492,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         dialog.getWindow()!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         dialog.tvDialogResend.setOnClickListener {
-            resendekycotp(userModel.cus_id)
+            resendekycotp(userModel.rtid)
         }
 
 
@@ -502,7 +502,7 @@ class AepsKycDetailsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 dialog.etOtp.setError("Please Enter Valid OTP")
             } else {
 
-                validateekycotp(dialog.etOtp.text.toString(),userModel.cus_id)
+                validateekycotp(dialog.etOtp.text.toString(),userModel.rtid)
 
                 dialog.dismiss()
             }

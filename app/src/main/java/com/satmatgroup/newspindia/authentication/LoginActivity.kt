@@ -18,6 +18,7 @@ import com.satmatgroup.newspindia.model.UserModel
 import com.satmatgroup.newspindia.network_calls.AppApiCalls
 import com.satmatgroup.newspindia.utils.AppCommonMethods
 import com.satmatgroup.newspindia.utils.AppConstants
+import com.satmatgroup.newspindia.utils.AppConstants.Companion.DATA
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.LOGIN_API
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.MESSAGE
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.RESULT
@@ -133,18 +134,17 @@ class LoginActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListener
             Log.e(AppConstants.STATUS, status)
             Log.e(MESSAGE, messageCode)
             if (status.contains(TRUE)) {
-                val token = jsonObject.getString(TOKEN)
-                val cast = jsonObject.getJSONArray(RESULT)
-                for (i in 0 until cast.length()) {
-                    val notifyObjJson = cast.getJSONObject(i)
+              //  val token = jsonObject.getString(TOKEN)
+                val cast = jsonObject.getJSONObject(DATA)
+
                     userModel = Gson()
-                        .fromJson(notifyObjJson.toString(), UserModel::class.java)
-                }
+                        .fromJson(cast.toString(), UserModel::class.java)
+
                 val gson = Gson()
                 val json = gson.toJson(userModel)
                 AppPrefs.putStringPref(USER_MODEL, json, this)
                 AppPrefs.putBooleanPref(AppConstants.IS_LOGIN, true, this)
-                AppPrefs.putStringPref(TOKEN, token, this)
+                //AppPrefs.putStringPref(TOKEN, token, this)
                 AppPrefs.putStringPref("deviceId", AppCommonMethods.getDeviceId(this), this)
                 AppPrefs.putStringPref("deviceName", AppCommonMethods.getDeviceName(), this)
                 val intent = Intent(this, NewMainActivity::class.java)

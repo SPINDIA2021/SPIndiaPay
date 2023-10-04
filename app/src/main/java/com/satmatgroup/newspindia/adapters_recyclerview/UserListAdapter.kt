@@ -41,7 +41,7 @@ class UserListAdapter(
     ) {
         val userListModel: UserListModel = recievedMoneyHistoryModelList[position]
         holder.tvUserName.setText("User Name : " + userListModel.cus_name)
-        holder.tvMobile.setText("Mobile : " + userListModel.cus_mobile)
+        holder.tvMobile.setText("Mobile : " + userListModel.mobile)
 
         if (userListModel.clbal.equals("null")|| userListModel.clbal==null) {
             holder.tvBalance.setText("Balance  : ₹0")

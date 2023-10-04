@@ -161,7 +161,7 @@ class DmtBenificiaryActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                     dialog.etConfirmAccount.text.toString(),
                     deviceId,
                     deviceNameDet,
-                    userModel.cus_id
+                    userModel.rtid
                 )*/
             }
         }
@@ -185,7 +185,7 @@ class DmtBenificiaryActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         accountNo: String,
         deviceId: String,
         deviceName: String,
-        cus_id: String
+        rtid: String
 
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -201,7 +201,7 @@ class DmtBenificiaryActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 accountNo,
                 deviceId,
                 deviceName,
-                cus_id
+                rtid
             )
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()

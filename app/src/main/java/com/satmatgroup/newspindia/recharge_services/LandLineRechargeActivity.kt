@@ -91,7 +91,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
             } else {
 
                 checkIfSameRecharge(
-                    userModel.cus_mobile, etAmountLandline.text.toString(),
+                    userModel.mobile, etAmountLandline.text.toString(),
                     etAmountLandline.text.toString(), operator_code
                 )
 
@@ -110,7 +110,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
         val gson = Gson()
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
-        getBalanceApi(userModel.cus_mobile)
+        getBalanceApi(userModel.mobile)
 
     }
 
@@ -133,7 +133,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
     }
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -143,7 +143,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -151,7 +151,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
     }
 
     private fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -164,7 +164,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 AppConstants.CHECK_SAME_RECHARGE_API,
                 this
             )
-            mAPIcall.checkIfSameRecharge(cus_id, rec_mobile, amount, operator)
+            mAPIcall.checkIfSameRecharge(rtid, rec_mobile, amount, operator)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -172,7 +172,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
     }
 
     private fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -183,7 +183,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 AppConstants.VERFY_PIN_API,
                 this
             )
-            mAPIcall.verifyPin(cus_mobile, pin)
+            mAPIcall.verifyPin(mobile, pin)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -191,11 +191,11 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
     }
 
     private fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -205,7 +205,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 AppConstants.RECHARGE_API,
                 this
             )
-            mAPIcall.rechargeApi(cus_id, rec_mobile, amount, operator, cus_type)
+            mAPIcall.rechargeApi(rtid, rec_mobile, amount, operator, logintype)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -282,7 +282,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
             Log.e(AppConstants.STATUS, status)
             if (status.contains("true")) {
                 progress_bar.visibility = View.GONE
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",this).toString())
                 //confirmPinDialog()
 
             } else {
@@ -324,8 +324,8 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
             if (status.contains(AppConstants.TRUE)) {
                 progress_bar.visibility = View.GONE
                 rechargeApi(
-                    userModel.cus_id, etLandlineNumber.text.toString(),
-                    etAmountLandline.text.toString(), operator_code, userModel.cus_type
+                    userModel.rtid, etLandlineNumber.text.toString(),
+                    etAmountLandline.text.toString(), operator_code, userModel.logintype
                 )
 
             } else {
@@ -463,7 +463,7 @@ class LandLineRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 dialog.etPin.setError("Please Enter Pin")
             } else {
 
-                verifyPin(userModel.cus_mobile,AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile,AppPrefs.getStringPref("AppPassword",this).toString())
                 dialog.dismiss()
             }
 

@@ -64,10 +64,10 @@ class AepsCommissionHistoryAdapter(
 
         }*/
         holder.tvAmount.text = "Amount : ₹ " + rechargeHistoryModal.amount
-        if (userModel.cus_type.equals("retailer")){
+        if (userModel.logintype.equals("retailer")){
             holder.tvCommissionRecieved.text ="Commission Recvd :₹"+rechargeHistoryModal.retailer_commission
 
-        }else if (userModel.cus_type.equals("master")){
+        }else if (userModel.logintype.equals("master")){
             holder.tvCommissionRecieved.text ="Commission Recvd :₹"+rechargeHistoryModal.master_commission
 
 

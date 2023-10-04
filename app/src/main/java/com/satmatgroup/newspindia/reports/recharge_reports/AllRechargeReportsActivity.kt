@@ -75,7 +75,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
             }
             recentRechargeHistoryModalArrayList.clear()
             rechargeHistoryFromTo(
-                userModel.cus_mobile,
+                userModel.mobile,
                 AppCommonMethods.convertDateFormat(
                     "dd MMM yyyy",
                     "yyyy-MM-dd", tvFromDateRecHistory.text.toString()
@@ -162,7 +162,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
             if (convertedDate2.after(convertedDate) || convertedDate2.equals(convertedDate)) {
                 recentRechargeHistoryModalArrayList.clear()
                 rechargeHistoryFromTo(
-                    userModel.cus_mobile,
+                    userModel.mobile,
                     AppCommonMethods.convertDateFormat(
                         "dd MMM yyyy",
                         "yyyy-MM-dd", tvFromDateRecHistory.text.toString()
@@ -190,7 +190,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
 
     //API CALL FUNCTION DEFINITION
     private fun rechargeHistoryFromTo(
-        cus_mobile: String,
+        mobile: String,
         fromDate: String,
         toDate: String,
 
@@ -203,7 +203,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
                 this
             )
             mAPIcall.rechargeHistoryFromTo(
-                cus_mobile,
+                mobile,
                 fromDate,
                 toDate
             )
@@ -254,7 +254,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
     override fun onRefresh() {
         recentRechargeHistoryModalArrayList.clear()
         rechargeHistoryFromTo(
-            userModel.cus_mobile,
+            userModel.mobile,
             AppCommonMethods.convertDateFormat(
                 "dd MMM yyyy",
                 "yyyy-MM-dd", tvFromDateRecHistory.text.toString()
@@ -288,7 +288,7 @@ class AllRechargeReportsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCom
         showSuccessOrFailedDialog("Recharge Status",retryResponse!!)
         recentRechargeHistoryModalArrayList.clear()
         rechargeHistoryFromTo(
-            userModel.cus_mobile,
+            userModel.mobile,
             AppCommonMethods.convertDateFormat(
                 "dd MMM yyyy",
                 "yyyy-MM-dd", tvFromDateRecHistory.text.toString()

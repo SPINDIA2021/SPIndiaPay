@@ -6,7 +6,7 @@ data class DmtHistoryModel(
     val bene_code: String,
     val bene_name: String,
     val charge: String,
-    val cus_id: String,
+    val rtid: String,
     val description: String,
     val dmt_trnx_id: String,
     val imps_ref_no: String,

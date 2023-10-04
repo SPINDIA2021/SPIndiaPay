@@ -45,25 +45,25 @@ class DayBookActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        userDayBook(userModel.cus_id,AppPrefs.getStringPref("deviceId", this).toString(),
+        userDayBook(userModel.rtid,AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName",this ).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile,userModel.cus_type
+            "",
+            "",
+            userModel.mobile,userModel.logintype
         )
     }
 
     private fun userDayBook(
-        cus_id: String,deviceId:String,deviceName :String,pin :String,
-        pass : String,cus_mobile : String,cus_type :String
+        rtid: String,deviceId:String,deviceName :String,pin :String,
+        pass : String,mobile : String,logintype :String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, DAYBOOK, this)
-            mAPIcall.userDayBook(cus_id,deviceId ,deviceName,pin,
-                pass,cus_mobile,cus_type)
+            mAPIcall.userDayBook(rtid,deviceId ,deviceName,pin,
+                pass,mobile,logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()

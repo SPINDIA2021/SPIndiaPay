@@ -88,7 +88,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        getBalanceApi(userModel.cus_mobile)
+        getBalanceApi(userModel.mobile)
 
         circle()
 
@@ -123,9 +123,9 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
                     checkIfSameRecharge(
-                        userModel.cus_mobile,
+                        userModel.mobile,
                         etMobileNumberPrepaid.text.toString(),
-                        etAmountPrepaid.text.toString(), userModel.cus_type
+                        etAmountPrepaid.text.toString(), userModel.logintype
                     )
 
                 }
@@ -155,10 +155,10 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                     operator_code,
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type,
+                    "",
+                   "",
+                    userModel.mobile,
+                    userModel.logintype,
                     circleId
                 )
 
@@ -193,7 +193,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
@@ -202,7 +202,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -211,7 +211,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
     private fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -224,7 +224,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 AppConstants.CHECK_SAME_RECHARGE_API,
                 this
             )
-            mAPIcall.checkIfSameRecharge(cus_id, rec_mobile, amount, operator)
+            mAPIcall.checkIfSameRecharge(rtid, rec_mobile, amount, operator)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -233,7 +233,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
     private fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -244,7 +244,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 AppConstants.VERFY_PIN_API,
                 this
             )
-            mAPIcall.verifyPin(cus_mobile, pin)
+            mAPIcall.verifyPin(mobile, pin)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -253,11 +253,11 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
     private fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -267,7 +267,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 AppConstants.RECHARGE_API,
                 this
             )
-            mAPIcall.rechargeApi(cus_id, rec_mobile, amount, operator, cus_type)
+            mAPIcall.rechargeApi(rtid, rec_mobile, amount, operator, logintype)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -281,7 +281,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
         pin: String,
         pass: String,
         cus_mobile: String,
-        cus_type: String,
+        logintype: String,
         circle_code: String
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -290,8 +290,8 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             val mAPIcall =
                 AppApiCalls(this, MOBILEOFFERS_API, this)
             mAPIcall.mobileOffers(
-                mobile, operator, deviceId, deviceName, pin, pass, cus_mobile,
-                cus_type, circle_code
+                mobile, operator, deviceId, deviceName, pin, pass, mobile,
+                logintype, circle_code
             )
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -380,7 +380,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             Log.e(AppConstants.STATUS, status)
             if (status.contains("true")) {
                 progress_bar.visibility = View.GONE
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",this).toString())
                 //confirmPinDialog()
 
             } else {
@@ -421,8 +421,8 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             if (status.contains(AppConstants.TRUE)) {
                 progress_bar.visibility = View.GONE
                 rechargeApi(
-                    userModel.cus_id, etMobileNumberPrepaid.text.toString(),
-                    etAmountPrepaid.text.toString(), operator_code, userModel.cus_type
+                    userModel.rtid, etMobileNumberPrepaid.text.toString(),
+                    etAmountPrepaid.text.toString(), operator_code, userModel.logintype
                 )
 
             } else {
@@ -634,7 +634,7 @@ class MobilePrepaidActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 dialog.etPin.setError("Please Enter Pin")
             } else {
 
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",this).toString())
                 dialog.dismiss()
             }
 

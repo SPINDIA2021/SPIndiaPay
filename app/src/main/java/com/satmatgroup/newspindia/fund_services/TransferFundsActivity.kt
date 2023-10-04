@@ -61,9 +61,9 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             userListModel = bundle.getSerializable("userListModel") as UserListModel
             tvCustomerName.setText(userListModel.cus_name)
             tvUserBalance.setText(userListModel.clbal)
-            etCustMobileNumber.setText(userListModel.cus_mobile.trim())
+            etCustMobileNumber.setText(userListModel.mobile.trim())
 
-            user_id = userListModel.cus_id
+            user_id = userListModel.rtid
         } else {
 
             tvCustomerName.setText("")
@@ -81,13 +81,12 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
         rlUserName.setOnClickListener {
             getUserList(
-                userModel.cus_id,
+                userModel.rtid,
                 AppPrefs.getStringPref(" deviceId", this@TransferFundsActivity).toString(),
                 AppPrefs.getStringPref("deviceName", this@TransferFundsActivity).toString(),
-                userModel.cus_pin,
-                userModel.cus_pass,
-                userModel.cus_mobile,
-                userModel.cus_type
+                "",
+                "",
+                userModel.mobile, userModel.logintype
             )
 
         }
@@ -106,15 +105,14 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
             } else {
                 checkIfSameFundTransfer(
-                    userModel.cus_id,
+                    userModel.rtid,
                     user_id,
                     etTransferFundsAmount.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
 
                 )
             }
@@ -132,10 +130,9 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                     etCustMobileNumber.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
             }
 
@@ -145,9 +142,9 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
 
     private fun checkIfSameFundTransfer(
-        cus_id: String, user_list_id: String, amount: String,
+        rtid: String, user_list_id: String, amount: String,
         deviceId: String, deviceName: String,
-        pin: String, pass: String, cus_mobile: String, cus_type: String
+        pin: String, pass: String, mobile: String, logintype: String
 
     ) {
 
@@ -155,8 +152,8 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             val mAPIcall =
                 AppApiCalls(this, SAME_FUNDTRANSFER, this)
             mAPIcall.checkIfSameFundTransfer(
-                cus_id, user_list_id, amount, deviceId, deviceName,
-                pin, pass, cus_mobile, cus_type
+                rtid, user_list_id, amount, deviceId, deviceName,
+                pin, pass, mobile, logintype
             )
         } else {
 
@@ -167,14 +164,14 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
     private fun getUserId(
         mobile: String,
         deviceId: String, deviceName: String,
-        pin: String, pass: String, cus_mobile: String, cus_type: String
+        pin: String, pass: String, cus_mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, GET_USER_ID, this)
-            mAPIcall.getUserId(mobile, deviceId, deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.getUserId(mobile, deviceId, deviceName, pin, pass, mobile, logintype)
         } else {
 
             toast("No Internet Connection")
@@ -184,15 +181,15 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
     private fun getUserList(
         dis_cus_id: String,
         deviceId: String, deviceName: String,
-        pin: String, pass: String, cus_mobile: String,
-        cus_type: String
+        pin: String, pass: String, mobile: String,
+        logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, GET_USERLIST, this)
-            mAPIcall.getUserList(dis_cus_id, deviceId, deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.getUserList(dis_cus_id, deviceId, deviceName, pin, pass, mobile, logintype)
         } else {
 
             toast("No Internet Connection")
@@ -200,9 +197,9 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
     }
 
     private fun fundTransfer(
-        dis_id: String, cus_id: String, amount_string: String,
+        dis_id: String, rtid: String, amount_string: String,
         deviceId: String, deviceName: String,
-        pin: String, pass: String, cus_mobile: String, cus_type: String
+        pin: String, pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -211,13 +208,13 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 AppApiCalls(this, FUND_TRANSFER, this)
             mAPIcall.fundTransferApi(
                 dis_id,
-                cus_id,
+                rtid,
                 amount_string,
                 deviceId,
                 deviceName,
                 pin,
                 pass,
-                cus_mobile, cus_type
+                mobile, logintype
             )
         } else {
 
@@ -228,7 +225,7 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
     private fun searchUser(
         dis_cus_id: String, mobileorname: String,
         deviceId: String, deviceName: String,
-        pin: String, pass: String, cus_mobile: String, cus_type: String
+        pin: String, pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -242,7 +239,7 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 deviceName,
                 pin,
                 pass,
-                cus_mobile, cus_type
+                mobile, logintype
             )
         } else {
 
@@ -264,8 +261,8 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
 
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    val cus_id = notifyObjJson.getString("cus_id")
-                    Log.e("cus_id ", cus_id)
+                    val rtid = notifyObjJson.getString("rtid")
+                    Log.e("rtid ", rtid)
                     val userListModel = Gson()
                         .fromJson(
                             notifyObjJson.toString(),
@@ -300,13 +297,12 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 progress_bar.visibility = View.INVISIBLE
 
                 fundTransfer(
-                    userModel.cus_id, user_id, etTransferFundsAmount.getText().toString(),
+                    userModel.rtid, user_id, etTransferFundsAmount.getText().toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
             }
         }
@@ -325,7 +321,7 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 progress_bar.visibility = View.INVISIBLE
 
                 showSuccessRechargeDialog(response)
-                //walletBalance(cus_id);
+                //walletBalance(rtid);
             } else {
                 progress_bar.visibility = View.INVISIBLE
 
@@ -352,7 +348,7 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 val cast = jsonObject.getJSONArray("result")
                 for (i in 0 until cast.length()) {
                     val notifyObjJson = cast.getJSONObject(i)
-                    user_id = notifyObjJson.getString("cus_id")
+                    user_id = notifyObjJson.getString("rtid")
                     Log.e("userID ", user_id)
                     progress_bar.visibility = View.INVISIBLE
 
@@ -392,13 +388,12 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                     bottomSheetDialogUsers!!.dismiss()
 
                     getUserList(
-                        userModel.cus_id,
+                        userModel.rtid,
                         AppPrefs.getStringPref(" deviceId", this@TransferFundsActivity).toString(),
                         AppPrefs.getStringPref("deviceName", this@TransferFundsActivity).toString(),
-                        userModel.cus_pin,
-                        userModel.cus_pass,
-                        userModel.cus_mobile,
-                        userModel.cus_type
+                        "",
+                        "",
+                        userModel.mobile, userModel.logintype
                     )
                     hideKeyboard()
 
@@ -420,12 +415,12 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
             } else {
 
                 searchUser(
-                    userModel.cus_id, view.etSearchMobName.text.toString(),
+                    userModel.rtid, view.etSearchMobName.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
             }
         }
@@ -519,9 +514,9 @@ class TransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplete
                 tvUserBalance.setText(mobileRechargeModal.clbal)
 
             }
-            etCustMobileNumber.setText(mobileRechargeModal.cus_mobile)
+            etCustMobileNumber.setText(mobileRechargeModal.mobile)
 
-            user_id = mobileRechargeModal.cus_id
+            user_id = mobileRechargeModal.rtid
             bottomSheetDialogUsers!!.dismiss()
         }
 

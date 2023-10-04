@@ -7,7 +7,7 @@ data class DisputeHistoryModel(
     val api_msg: String,
     val apiclid: String,
     val apisourceid: String,
-    val cus_id: String,
+    val rtid: String,
     val dis_com_type: String,
     val dispute_status: String,
     val distributor: String,

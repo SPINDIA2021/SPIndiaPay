@@ -52,11 +52,11 @@ class DisputeReportHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallC
         userModel = gson.fromJson(json, UserModel::class.java)
 
         disputeHistory(
-            userModel.cus_id, AppPrefs.getStringPref("deviceId", this).toString(),
+            userModel.rtid, AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
 
 
         )
@@ -79,8 +79,8 @@ class DisputeReportHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallC
     }
 
     private fun disputeHistory(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -88,8 +88,8 @@ class DisputeReportHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallC
             val mAPIcall =
                 AppApiCalls(this, DISPUTE_REPORT, this)
             mAPIcall.disputeHistory(
-                cus_id, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                rtid, deviceId, deviceName, pin,
+                pass, mobile, logintype
             )
         } else {
 
@@ -144,11 +144,11 @@ class DisputeReportHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallC
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 disputeHistory(
-                    userModel.cus_id, AppPrefs.getStringPref("deviceId", this).toString(),
+                    userModel.rtid, AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
 
 
                 )

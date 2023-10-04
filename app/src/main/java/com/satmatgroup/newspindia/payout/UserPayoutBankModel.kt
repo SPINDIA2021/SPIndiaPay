@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 
 class UserPayoutBankModel (
    /* val payout_bank_id: String,
-    val cus_id: String,
+    val rtid: String,
     val bankName: String,
     val bankAccount: String,
     val bankIFSC: String,

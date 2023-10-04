@@ -196,7 +196,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
                         bundle.putString("latitude",latitudeLabel);
                         bundle.putString("longitude",longitudeLabel);
                         bundle.putString("flag","aeps")
-                        bundle.putString("cus_id", userModel.cus_id)
+                        bundle.putString("rtid", userModel.rtid)
                         bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
                         bundle.putString(
                             "nationalBankIdenticationNumber",
@@ -228,7 +228,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
                         bundle.putString("latitude",latitudeLabel);
                         bundle.putString("longitude",longitudeLabel);
                         bundle.putString("flag","aeps")
-                        bundle.putString("cus_id", userModel.cus_id)
+                        bundle.putString("rtid", userModel.rtid)
                         bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
                         bundle.putString(
                             "nationalBankIdenticationNumber",
@@ -261,7 +261,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
                             bundle.putString("latitude",latitudeLabel);
                             bundle.putString("longitude",longitudeLabel);
                             bundle.putString("flag","aeps")
-                            bundle.putString("cus_id", userModel.cus_id)
+                            bundle.putString("rtid", userModel.rtid)
                             bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
                             bundle.putString(
                                 "nationalBankIdenticationNumber",
@@ -289,7 +289,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
             bundle.putString("latitude",latitudeLabel);
             bundle.putString("longitude",longitudeLabel);
             bundle.putString("flag","aeps")
-            bundle.putString("cus_id", userModel.cus_mobile)
+            bundle.putString("rtid", userModel.rtid)
             bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
             bundle.putString(
                 "nationalBankIdenticationNumber",
@@ -407,7 +407,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
     }
 
 /*    private fun aepsTransaction(
-        cus_id: String,
+        rtid: String,
         txtPidData: String,
         adhaarNumber: String,
         nationalBankIdenticationNumber: String,
@@ -423,7 +423,7 @@ class AepsTransactionActivity : AppCompatActivity(), BankAepsListAdapter.ListAda
             val mAPIcall =
                 AppApiCalls(this, AEPS_TRANSACTION, this)
             mAPIcall.aepsTransaction(
-                cus_id,
+                rtid,
                 txtPidData,
                 adhaarNumber,
                 nationalBankIdenticationNumber,

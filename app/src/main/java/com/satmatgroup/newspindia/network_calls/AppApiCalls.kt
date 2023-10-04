@@ -106,9 +106,9 @@ import com.satmatgroup.newspindia.utils.AppConstants.Companion.AMOUNT
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.API_KEY
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.BASIC
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.BASIC_TOKEN
-import com.satmatgroup.newspindia.utils.AppConstants.Companion.CUS_ID
+import com.satmatgroup.newspindia.utils.AppConstants.Companion.rtid
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.CUS_MOBILE_API
-import com.satmatgroup.newspindia.utils.AppConstants.Companion.CUS_TYPE
+import com.satmatgroup.newspindia.utils.AppConstants.Companion.logintype
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.DATE
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.DEVICE_ID
 import com.satmatgroup.newspindia.utils.AppConstants.Companion.DEVICE_NAME
@@ -182,15 +182,11 @@ class AppApiCalls(
                 }
             ) {
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val jsonObject: MutableMap<String, String> =
-                        HashMap()
-                    jsonObject[MOBILE] = mobile
-                    jsonObject[PASSWORD] = password
-                    jsonObject[DEVICE_ID] = deviceId
-                    jsonObject[DEVICE_NAME] = deviceName
-                    jsonObject["otp"] = otp
-                    return jsonObject
+                override fun getParams(): Map<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["memberid"] = mobile
+                    params["password"] = password
+                    return params
                 }
 
                 @Throws(AuthFailureError::class)
@@ -286,7 +282,7 @@ class AppApiCalls(
 
     //Dashboard
     fun dashboard(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = GET_DASHBOARD
@@ -327,7 +323,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_id
+                    jsonObject[CUS_MOBILE_API] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -351,7 +347,7 @@ class AppApiCalls(
 
     //Get Balance
     fun getBalance(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = GET_BALANCE
@@ -389,13 +385,10 @@ class AppApiCalls(
                 }
             ) {
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val jsonObject: MutableMap<String, String> =
-                        HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_id
-                    jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
-
-                    return jsonObject
+                override fun getParams(): Map<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["rtid"] = rtid
+                    return params
                 }
 
                 @Throws(AuthFailureError::class)
@@ -416,7 +409,7 @@ class AppApiCalls(
 
     //Get AEPS Balance
     fun getAepsBalance(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = GET_AEPS_BALANCE
@@ -457,7 +450,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_ID] = cus_id
+                    jsonObject["cus_id"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -482,7 +475,7 @@ class AppApiCalls(
 
     //Get Profile
     fun getProfile(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = GET_PROFILE
@@ -523,7 +516,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_id
+                    jsonObject[CUS_MOBILE_API] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -679,7 +672,7 @@ class AppApiCalls(
 
     //Check if Same recharge
     fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -723,7 +716,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_id
+                    jsonObject[CUS_MOBILE_API] = rtid
                     jsonObject[OPERATOR] = operator
                     jsonObject[REC_MOBILE] = rec_mobile
                     jsonObject[AMOUNT] = amount
@@ -751,7 +744,7 @@ class AppApiCalls(
 
     //Verify Pin
     fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
 
@@ -793,7 +786,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_mobile
+                    jsonObject[CUS_MOBILE_API] = mobile
                     jsonObject[PIN] = pin
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -819,11 +812,11 @@ class AppApiCalls(
 
     //Recharge Api
     fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
     ) {
 
         val url: String = RECHARGE
@@ -864,11 +857,11 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_ID] = cus_id
+                    jsonObject[rtid] = rtid
                     jsonObject[MOBILE_RECHARGE] = rec_mobile
                     jsonObject[AMOUNT] = amount
                     jsonObject[OPERATOR] = operator
-                    jsonObject[CUS_TYPE] = cus_type
+                    jsonObject[logintype] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -891,11 +884,11 @@ class AppApiCalls(
     }
 
     fun rechargeApiElectricity(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
         bill_unit: String,
         circle_code: String
     ) {
@@ -938,11 +931,11 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_ID] = cus_id
+                    jsonObject[rtid] = rtid
                     jsonObject[MOBILE_RECHARGE] = rec_mobile
                     jsonObject[AMOUNT] = amount
                     jsonObject[OPERATOR] = operator
-                    jsonObject[CUS_TYPE] = cus_type
+                    jsonObject[logintype] = logintype
                     jsonObject["bill_unit"] = bill_unit
                     jsonObject["circle_code"] = circle_code
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
@@ -968,7 +961,7 @@ class AppApiCalls(
 
     //Recharge History
     fun rechargeHistoryFromTo(
-        cus_mobile: String,
+        mobile: String,
         fromDate: String,
         toDate: String,
     ) {
@@ -1010,7 +1003,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_mobile
+                    jsonObject[CUS_MOBILE_API] = mobile
                     jsonObject[FROM_DATE] = fromDate
                     jsonObject[TO_DATE] = toDate
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
@@ -1037,7 +1030,7 @@ class AppApiCalls(
 
     //Recharge History by date
     fun rechargeHistoryByDate(
-        cus_mobile: String,
+        mobile: String,
         date: String,
     ) {
 
@@ -1078,7 +1071,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject[CUS_MOBILE_API] = cus_mobile
+                    jsonObject[CUS_MOBILE_API] = mobile
                     jsonObject[DATE] = date
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -1106,9 +1099,9 @@ class AppApiCalls(
 
 
     fun contactUsApi(
-        cus_id: String,
+        rtid: String,
         deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = GET_SUPPORT
@@ -1145,13 +1138,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
 
@@ -1175,15 +1168,15 @@ class AppApiCalls(
     }
 
     fun changePassword(
-        cus_id: String,
+        rtid: String,
         current_password: String,
         new_password: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = CHANGE_PASWORD
@@ -1220,15 +1213,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["password"] = current_password
                     jsonObject["newpassword"] = new_password
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1251,15 +1244,15 @@ class AppApiCalls(
     }
 
     fun changePin(
-        cus_id: String,
+        rtid: String,
         current_pin: String,
         new_pin: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = CHANGE_PIN
@@ -1296,15 +1289,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["id"] = cus_id
+                    jsonObject["id"] = rtid
                     jsonObject["curr_pin"] = current_pin
                     jsonObject["new_pin"] = new_pin
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1446,8 +1439,8 @@ class AppApiCalls(
     }
 
     fun getUserId(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = GET_USER_ID
@@ -1483,13 +1476,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["mobile"] = cus_id
+                    jsonObject["mobile"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["cus_mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1514,7 +1507,7 @@ class AppApiCalls(
 
     fun getUserList(
         dis_cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         Log.e("DISCUS", dis_cus_id)
         val url: String = USER_LIST
@@ -1556,8 +1549,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1583,7 +1576,7 @@ class AppApiCalls(
     fun createUserApi(
         newMob: String, dis_id: String, newName: String,
         newPass: String, newEmail: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = NEWUSER_URL
@@ -1629,8 +1622,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1656,7 +1649,7 @@ class AppApiCalls(
     fun createDistributorApi(
         newMob: String, dis_id: String, newName: String,
         newPass: String, newEmail: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = NEW_DISTRIBUTOR_URL
@@ -1702,8 +1695,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1730,7 +1723,7 @@ class AppApiCalls(
 
     fun dthInfo(
         mobile: String, operator: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, cus_mobile: String, logintype: String
     ) {
 
         val url: String = BROWSE_PLANS_DTH
@@ -1773,8 +1766,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -1801,7 +1794,7 @@ class AppApiCalls(
 
     fun mobileOffers(
         mobile: String, operator: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String, circle_code: String
+        pass: String, cus_mobile: String, logintype: String, circle_code: String
     ) {
 
         val url: String = BROWSE_PLANS
@@ -1842,7 +1835,7 @@ class AppApiCalls(
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
                     jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["logintype"] = logintype
                     jsonObject["circle_code"] = circle_code
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -1933,8 +1926,8 @@ class AppApiCalls(
     }
 
     fun commisionSlab(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = COMMISION_REPORT_URL
@@ -1971,13 +1964,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2002,8 +1995,8 @@ class AppApiCalls(
     }
 
     fun disputeHistory(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = DISSPUTE_HISTORY
@@ -2040,13 +2033,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2073,7 +2066,7 @@ class AppApiCalls(
 
     fun searcUser(
         dis_cus_id: String, mobileorname: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = USER_SEARCH
@@ -2116,8 +2109,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2141,15 +2134,15 @@ class AppApiCalls(
     }
 
     fun fundRecieveHistory(
-        cus_id: String,
+        rtid: String,
         fromdate: String,
         todate: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = FUND_CREDIT
@@ -2186,15 +2179,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fromdate"] = fromdate
                     jsonObject["todate"] = todate
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2219,15 +2212,15 @@ class AppApiCalls(
     }
 
     fun fundTransferHistory(
-        cus_id: String,
+        rtid: String,
         fromdate: String,
         todate: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = FUND_DEBIT
@@ -2264,15 +2257,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fromdate"] = fromdate
                     jsonObject["todate"] = todate
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2297,15 +2290,15 @@ class AppApiCalls(
     }
 
     fun ledgerReportApi(
-        cus_id: String,
+        rtid: String,
         fromdate: String,
         todate: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = LEDGER_REPORT
@@ -2342,15 +2335,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fromdate"] = fromdate
                     jsonObject["todate"] = todate
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2376,8 +2369,8 @@ class AppApiCalls(
     }
 
     fun userDayBook(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = USER_DAYBOOK
@@ -2414,13 +2407,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2447,15 +2440,15 @@ class AppApiCalls(
 
 
     fun checkIfSameFundTransfer(
-        cus_id: String,
+        rtid: String,
         to_id: String,
         amount: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = CHECKSAME_FUNDTRANSFER
@@ -2493,15 +2486,15 @@ class AppApiCalls(
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
 
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["to_id"] = to_id
                     jsonObject["amount"] = amount
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
 
@@ -2529,7 +2522,7 @@ class AppApiCalls(
 
     fun getpinotp(
         mobile: String, otp: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, cus_mobile: String, logintype: String
     ) {
 
         Log.e("mobile", mobile)
@@ -2573,8 +2566,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["cus_mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2661,9 +2654,9 @@ class AppApiCalls(
     }
 
     fun forgetpin(
-        cus_id: String,
+        rtid: String,
         deviceId: String,
-        deviceName: String, cus_type: String
+        deviceName: String, logintype: String
     ) {
 
         val url: String = FORGETPIN
@@ -2700,8 +2693,8 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["rtid"] = rtid
+                    jsonObject["logintype"] = logintype
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
@@ -2727,15 +2720,15 @@ class AppApiCalls(
     }
 
     fun fundRequestHistory(
-        cus_id: String,
+        rtid: String,
         fromdate: String,
         todate: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = FUND_MYREQUEST
@@ -2772,15 +2765,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fromdate"] = fromdate
                     jsonObject["todate"] = todate
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2806,12 +2799,12 @@ class AppApiCalls(
     }
 
     fun fundRequestApi(
-        cus_id: String,
+        rtid: String,
         req_to: String,
         amount: String,
         bank: String,
         refrenceNumber: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = FUND_REQUEST_URL
@@ -2848,7 +2841,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["req_to"] = req_to
                     jsonObject["amount"] = amount
                     jsonObject["bank"] = bank
@@ -2857,8 +2850,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -2885,14 +2878,14 @@ class AppApiCalls(
 
     fun fundTransferApi(
         dis_id: String,
-        cus_id: String,
+        rtid: String,
         amount_string: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = FUND_TRANSFER
@@ -2930,14 +2923,14 @@ class AppApiCalls(
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
                     jsonObject["dis_id"] = dis_id
-                    jsonObject["c_id"] = cus_id
+                    jsonObject["c_id"] = rtid
                     jsonObject["amount"] = amount_string
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -2965,11 +2958,11 @@ class AppApiCalls(
 
 
     fun raiseDisputeApi(
-        cus_id: String,
+        rtid: String,
         recid: String,
         issue: String,
         subject: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = RAISE_DISPUTE
@@ -3006,7 +2999,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["recid"] = recid
                     jsonObject["issue"] = issue
                     jsonObject["subject"] = subject
@@ -3014,8 +3007,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
 
@@ -3043,9 +3036,9 @@ class AppApiCalls(
 
 
     fun getUpi(
-        cus_id: String,
+        rtid: String,
         deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = GET_UPIDETAILS
@@ -3082,13 +3075,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> = HashMap()
 
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -3112,12 +3105,12 @@ class AppApiCalls(
     }
 
     fun addFundsApi(
-        cus_id: String,
+        rtid: String,
         amount: String,
         bank: String,
         transactionId: String,
         txnRef: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = UPDATE_WALLET
@@ -3153,7 +3146,7 @@ class AppApiCalls(
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> = HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["amount"] = amount
                     jsonObject["bank"] = bank
                     jsonObject["transaction_id"] = transactionId
@@ -3162,8 +3155,8 @@ class AppApiCalls(
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -3189,8 +3182,8 @@ class AppApiCalls(
     }
 
     fun userLogout(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = LOGOUT_USER
@@ -3227,13 +3220,13 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -3257,15 +3250,15 @@ class AppApiCalls(
     }
 
     fun rechargeHistory(
-        cus_id: String,
+        rtid: String,
         fromdate: String,
         todate: String,
         deviceId: String,
         deviceName: String,
         pin: String,
         pass: String,
-        cus_mobile: String,
-        cus_type: String
+        mobile: String,
+        logintype: String
     ) {
 
         val url: String = RECHARGE_HISTORY
@@ -3302,15 +3295,15 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fromdate"] = fromdate
                     jsonObject["todate"] = todate
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -3337,8 +3330,8 @@ class AppApiCalls(
 
 
     fun rechargeHistoryByMobile(
-        cus_id: String, mobile: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, mobile: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, cus_mobile: String, logintype: String
     ) {
 
         val url: String = RECHARGE_HISTORY_BY_MOBILE
@@ -3375,14 +3368,14 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["mobile"] = mobile
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["cus_mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -3407,8 +3400,8 @@ class AppApiCalls(
     }
 
     fun rechargeHistoryByDate(
-        cus_id: String, date: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, date: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = RECHARGE_HISTORY_BY_DATE
@@ -3445,14 +3438,14 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["date"] = date
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -4047,7 +4040,7 @@ class AppApiCalls(
         VolleySingleton.instance?.addToRequestQueue(getRequest)
     }
 
-    fun dmtHistory(cus_id: String) {
+    fun dmtHistory(rtid: String) {
 
         val url: String = DMT_HISTORY
         AppCommonMethods(mContext).LOG(0, TAG, url)
@@ -4083,7 +4076,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
                     return jsonObject
                 }
@@ -4233,7 +4226,7 @@ class AppApiCalls(
         beneficiaryAccount: String,
         beneficiaryIFSC: String,
         amount: String,
-        cus_id: String,
+        rtid: String,
         benename: String,
         bankname: String,
         beneficiaryid: String,
@@ -4284,7 +4277,7 @@ class AppApiCalls(
                     jsonObject["beneficiaryAccount"] = beneficiaryAccount
                     jsonObject["beneficiaryIFSC"] = beneficiaryIFSC
                     jsonObject["amount"] = amount
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["benename"] = benename
                     jsonObject["bankname"] = bankname
                     jsonObject["beneficiaryid"] = beneficiaryid
@@ -4370,7 +4363,7 @@ class AppApiCalls(
     }
 
     fun dmtcommisionSlab(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = DMT_COMMISIONSLAB_URL
@@ -4407,7 +4400,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -4432,7 +4425,7 @@ class AppApiCalls(
 
 
     //AEPS
-    fun getAepsCharge(cus_id: String,amount: String) {
+    fun getAepsCharge(rtid: String,amount: String) {
 
         val url: String = GET_AEPS_CHARGE
         AppCommonMethods(mContext).LOG(0, TAG, url)
@@ -4472,14 +4465,14 @@ class AppApiCalls(
               /*  override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["amount"] = amount
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
                     return jsonObject
                 }*/
                 override fun getParams(): Map<String, String>? {
                     val params: MutableMap<String, String> = HashMap()
-                    params["rtid"] = cus_id
+                    params["rtid"] = rtid
                     params["callfunction"] = "getcharge"
                  //  params["bene_id"] = bene_id
                     params["amount"] = amount
@@ -4503,8 +4496,8 @@ class AppApiCalls(
     }
 
     fun aepsCommissionHistory(
-        cus_id: String, date: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, date: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = AEPSCOMMISSION_HISTORY
@@ -4541,14 +4534,14 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["date"] = date
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -4571,8 +4564,8 @@ class AppApiCalls(
     }
 
     fun aepsHistory(
-        cus_id: String, date: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, date: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
 
         val url: String = AEPS_HISTORY
@@ -4609,14 +4602,14 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["date"] = date
                     jsonObject["deviceId"] = deviceId
                     jsonObject["deviceName"] = deviceName
                     jsonObject["pin"] = pin
                     jsonObject["pass"] = pass
-                    jsonObject["cus_mobile"] = cus_mobile
-                    jsonObject["cus_type"] = cus_type
+                    jsonObject["mobile"] = mobile
+                    jsonObject["logintype"] = logintype
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -4640,7 +4633,7 @@ class AppApiCalls(
     }
 
     fun aepscommisionSlab(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = AEPS_COMMISIONSLAB_URL
@@ -4677,7 +4670,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -4700,7 +4693,7 @@ class AppApiCalls(
         VolleySingleton.instance?.addToRequestQueue(getRequest)
     }
 
-    fun aepsPayoutHistory(cus_id: String) {
+    fun aepsPayoutHistory(rtid: String) {
 
         val url: String = AEPSPAYOUT_HISTORY
         AppCommonMethods(mContext).LOG(0, TAG, url)
@@ -4736,7 +4729,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
                     return jsonObject
                 }
@@ -4758,7 +4751,7 @@ class AppApiCalls(
     }
 
     fun aepsPayout(
-        cus_id: String, bank_name: String, account_number: String,
+        rtid: String, bank_name: String, account_number: String,
         ifsc_code: String, account_holder_name: String, amount: String,
         charge: String, type: String, payout_bank_id: String,bene_id:String
     ) {
@@ -4797,7 +4790,7 @@ class AppApiCalls(
                /* override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["bank_name"] = bank_name
                     jsonObject["account_number"] = account_number
                     jsonObject["ifsc_code"] = ifsc_code
@@ -4813,7 +4806,7 @@ class AppApiCalls(
 
                 override fun getParams(): Map<String, String>? {
                     val params: MutableMap<String, String> = HashMap()
-                    params["rtid"] = cus_id
+                    params["rtid"] = rtid
                     params["callfunction"] = "dotransaction"
                     params["bene_id"] = bene_id
                     params["amount"] = amount
@@ -4837,7 +4830,7 @@ class AppApiCalls(
     }
 
     fun aepsPayountAccountDetails(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = GET_PAYOUT_DETAILS
@@ -4875,7 +4868,7 @@ class AppApiCalls(
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
 
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -4897,7 +4890,7 @@ class AppApiCalls(
     }
 
     fun userPayoutBank(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = USER_PAYOUT_BANK
@@ -4934,7 +4927,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["rtid"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["callfunction"] = "accountlist"
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
@@ -4960,7 +4953,7 @@ class AppApiCalls(
 
 
     fun aepsTransaction(
-        cus_id: String,
+        rtid: String,
         txtPidData: String,
         adhaarNumber: String,
         nationalBankIdenticationNumber: String,
@@ -4975,7 +4968,7 @@ class AppApiCalls(
 
         //open(result);
         //putStringPref(AppConstants.PIDDATA, txtPidData, mContext)
-       /* Toast.makeText(mContext,"AEPS Req: cus_id"+ cus_id+
+       /* Toast.makeText(mContext,"AEPS Req: rtid"+ rtid+
             " adhaarNumber: "+adhaarNumber+" nationalBankIdenticationNumber: "+nationalBankIdenticationNumber
             +" mobileNumber: "+mobileNumber+" type: "+type+" transactionAmount: "+transactionAmount+
             " latitude: "+latitude+" longitude: "+longitude, Toast.LENGTH_LONG)
@@ -5024,7 +5017,7 @@ class AppApiCalls(
                     jsonObject["longitude"] = longitude
                     jsonObject["latitude"] = latitude
                     jsonObject["adhaarnumber"] = adhaarNumber
-                    jsonObject["rtid"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["fingerprintdata"] = txtPidData
                     jsonObject["callfunctn"] = type
                     jsonObject["transactionAmount"] = transactionAmount
@@ -5108,7 +5101,7 @@ class AppApiCalls(
 
     //KYC
     fun kycOnBoarding(
-        cus_id: String,
+        rtid: String,
         latitude: String,
         longitude: String,
         merchantName: String,
@@ -5173,7 +5166,7 @@ class AppApiCalls(
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> = HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["latitude"] = latitude
                     jsonObject["longitude"] = longitude
                     jsonObject["merchantName"] = merchantName
@@ -5329,7 +5322,7 @@ class AppApiCalls(
         aadhaarNumber: String,
         txtPidData: String,
         PidOptions: String,
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = EKYC
@@ -5373,7 +5366,7 @@ class AppApiCalls(
                     jsonObject["aadhaarNumber"] = aadhaarNumber
                     jsonObject["txtPidData"] = txtPidData
                     jsonObject["PidOptions"] = PidOptions
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -5397,7 +5390,7 @@ class AppApiCalls(
 
     fun validateekycotp(
         otp: String,
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = VALIDATE_EKYC_OTP
@@ -5437,7 +5430,7 @@ class AppApiCalls(
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
                     jsonObject["otp"] = otp
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -5460,7 +5453,7 @@ class AppApiCalls(
     }
 
     fun resendekycotp(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = RESEND_EKYC_OTP
@@ -5500,7 +5493,7 @@ class AppApiCalls(
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
 
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
@@ -5523,7 +5516,7 @@ class AppApiCalls(
     }
 
     fun checkKycStatus(
-        cus_id: String
+        rtid: String
     ) {
         val url: String = CHECK_KYC_STATUS
         AppCommonMethods(mContext).LOG(0, TAG, url)
@@ -5559,7 +5552,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     return jsonObject
                 }
 
@@ -5583,7 +5576,7 @@ class AppApiCalls(
     //MICRO ATM
 
     fun microAtmTransaction(
-        cus_id: String,
+        rtid: String,
         status: String,
         response: String,
         transAmount: String,
@@ -5648,7 +5641,7 @@ class AppApiCalls(
                     jsonObject["terminalId"] = terminalId
                     jsonObject["fpId"] = fpId
                     jsonObject["transId"] = transId
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -5669,7 +5662,7 @@ class AppApiCalls(
         VolleySingleton.instance?.addToRequestQueue(getRequest)
     }
     fun microAtmLogin(
-        cus_id: String
+        rtid: String
 
     ) {
 
@@ -5709,7 +5702,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -5915,7 +5908,7 @@ class AppApiCalls(
     }
 
     fun getServiceStatus(
-        cus_id: String,
+        rtid: String,
         service: String
     ) {
 
@@ -5955,7 +5948,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["cus_id"] = rtid
                     jsonObject["service"] = service
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
@@ -6041,7 +6034,7 @@ class AppApiCalls(
     }
 
     fun buyService(
-        cus_id: String,
+        rtid: String,
         service: String,
         amount: String
     ) {
@@ -6082,7 +6075,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["service"] = service
                     jsonObject["amount"] = amount
 
@@ -6107,7 +6100,7 @@ class AppApiCalls(
     }
 
     fun buyProduct(
-        cus_id: String,
+        rtid: String,
         product_id: String,
         pro_name: String,
         quantity: String,
@@ -6151,7 +6144,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["product_id"] = product_id
                     jsonObject["pro_name"] = pro_name
                     jsonObject["quantity"] = quantity
@@ -6179,7 +6172,7 @@ class AppApiCalls(
     }
 
     fun buyProductandService(
-        cus_id: String,
+        rtid: String,
         product_service_id: String,
         offer_name: String,
         quantity: String,
@@ -6223,7 +6216,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject["product_service_id"] = product_service_id
                     jsonObject["offer_name"] = offer_name
                     jsonObject["quantity"] = quantity
@@ -6255,7 +6248,7 @@ class AppApiCalls(
         cdAcctNumber: String,
         cdnationalBankIdenticationNumber: String,
         cdtransactionAmount: String,
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = CASH_DEPOSIT_WITH_OTP
@@ -6298,7 +6291,7 @@ class AppApiCalls(
                     jsonObject["cdAcctNumber"] = cdAcctNumber
                     jsonObject["cdnationalBankIdenticationNumber"] = cdnationalBankIdenticationNumber
                     jsonObject["cdtransactionAmount"] = cdtransactionAmount
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -6327,7 +6320,7 @@ class AppApiCalls(
         fingpayTransactionId: String,
         cdPkId: String,
         otp: String,
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = VALIDATE_CASH_DEPOSIT_OTP
@@ -6373,7 +6366,7 @@ class AppApiCalls(
                     jsonObject["fingpayTransactionId"] = fingpayTransactionId
                     jsonObject["cdPkId"] = cdPkId
                     jsonObject["otp"] = otp
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 
                     return jsonObject
@@ -6395,7 +6388,7 @@ class AppApiCalls(
     }
 
     fun productServicesHistory(
-        cus_id: String
+        rtid: String
     ) {
 
         val url: String = PRODUCT_SERVICES_HISTORY
@@ -6434,7 +6427,7 @@ class AppApiCalls(
                 override fun getParams(): Map<String, String> {
                     val jsonObject: MutableMap<String, String> =
                         HashMap()
-                    jsonObject["cus_id"] = cus_id
+                    jsonObject["rtid"] = rtid
 
                     jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
 

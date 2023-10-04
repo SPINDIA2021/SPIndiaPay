@@ -59,15 +59,15 @@ class AepsCommissionActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         tvSelectDate.text = dateInString
         tvSelectDate.text = dateInString
         aepsCommissionHistory(
-            userModel.cus_id, AppCommonMethods.convertDateFormat(
+            userModel.rtid, AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy",
                 "yyyy-MM-dd", tvSelectDate.text.toString()
             ).toString(),
             AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
         )
         custToolbar.ivMore.setOnClickListener {
             val popup = PopupMenu(this@AepsCommissionActivity, ivMore)
@@ -90,8 +90,8 @@ class AepsCommissionActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
     }
 
     private fun aepsCommissionHistory(
-        cus_id: String, date: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, date: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -99,14 +99,14 @@ class AepsCommissionActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
             val mAPIcall =
                 AppApiCalls(this, AEPSHISTORY_REPORT, this)
             mAPIcall.aepsCommissionHistory(
-                cus_id,
+                rtid,
                 date,
                 deviceId,
                 deviceName,
                 pin,
                 pass,
-                cus_mobile,
-                cus_type
+                mobile,
+                logintype
             )
         } else {
 
@@ -163,15 +163,15 @@ class AepsCommissionActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 aepsCommissionHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy",
                         "yyyy-MM-dd", tvSelectDate.text.toString()
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
                 true
             }
@@ -192,14 +192,14 @@ class AepsCommissionActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 val date = "$mDay/$mmMonth/$mYear"
                 tvSelectDate.text = date
                 aepsCommissionHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy",
                         "yyyy-MM-dd", tvSelectDate.text.toString()
                     ).toString(), AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
 
             }, year, month, day)

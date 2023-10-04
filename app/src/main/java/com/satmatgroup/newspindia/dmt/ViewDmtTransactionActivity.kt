@@ -50,7 +50,7 @@ class ViewDmtTransactionActivity : AppCompatActivity(),
         val json = AppPrefs.getStringPref("userModel", this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        //dmtHistory(userModel.cus_id)
+        //dmtHistory(userModel.rtid)
 
 
         mSwipeRefresh.setOnRefreshListener(this);
@@ -60,7 +60,7 @@ class ViewDmtTransactionActivity : AppCompatActivity(),
                 mSwipeRefresh.setRefreshing(true)
             }
             dmtHistoryModelArrayList.clear()
-            dmtHistory(userModel.cus_id)
+            dmtHistory(userModel.rtid)
 
             mSwipeRefresh.setRefreshing(false)
 
@@ -69,14 +69,14 @@ class ViewDmtTransactionActivity : AppCompatActivity(),
     }
 
     fun dmtHistory(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, DMTHISTORY_REPORT, this)
-            mAPIcall.dmtHistory(cus_id)
+            mAPIcall.dmtHistory(rtid)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -135,7 +135,7 @@ class ViewDmtTransactionActivity : AppCompatActivity(),
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 dmtHistory(
-                    userModel.cus_id
+                    userModel.rtid
                 )
                 true
             }
@@ -146,7 +146,7 @@ class ViewDmtTransactionActivity : AppCompatActivity(),
 
     override fun onRefresh() {
         dmtHistoryModelArrayList.clear()
-        dmtHistory(userModel.cus_id)
+        dmtHistory(userModel.rtid)
 
 
         mSwipeRefresh.setRefreshing(false)

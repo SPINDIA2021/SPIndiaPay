@@ -147,10 +147,12 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        getBalanceApi(userModel.cus_mobile)
-        getAepsBalanceApi(userModel.cus_id)
+
+
+        getBalanceApi(userModel.rtid)
+        getAepsBalanceApi(userModel.rtid)
         offerPopup()
-        dashboardApi(userModel.cus_mobile)
+        dashboardApi(userModel.mobile)
 
 
         ActivityCompat.requestPermissions(
@@ -169,8 +171,8 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         }
 
 
-        navigation_viewNew.tvCustName.setText(userModel.cus_name)
-        navigation_viewNew.tvCustMobile.setText(userModel.cus_mobile)
+        navigation_viewNew.tvCustName.setText(userModel.name)
+        navigation_viewNew.tvCustMobile.setText(userModel.mobile)
 
         navigation_viewNew.rl_logOut.setOnClickListener {
             showLogout()
@@ -198,7 +200,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     }
 
     private fun dashboardApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_barNew.visibility = View.VISIBLE
         if (AppCommonMethods(this).isNetworkAvailable) {
@@ -207,7 +209,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 AppConstants.DASHBOARD_API,
                 this
             )
-            mAPIcall.dashboard(cus_id)
+            mAPIcall.dashboard(rtid)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -216,7 +218,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
 /*        progress_bar_balance.visibility = View.VISIBLE
         rl_wallet_balance.visibility = GONE
@@ -227,7 +229,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -272,7 +274,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     }
 
     private fun buyService(
-        cus_id: String,
+        rtid: String,
         service: String,
         amount: String
     ) {
@@ -282,7 +284,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             val mAPIcall =
                 AppApiCalls(this, BUY_SERVICE, this)
             mAPIcall.buyService(
-                cus_id, service, amount
+                rtid, service, amount
             )
         } else {
 
@@ -291,7 +293,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     }
 
     private fun getAepsBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
 /*        progress_bar_aeps.visibility = View.VISIBLE
         rl_aeps_balance.visibility = GONE
@@ -302,7 +304,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 AppConstants.AEPS_BALANCE_API,
                 this
             )
-            mAPIcall.getAepsBalance(cus_id)
+            mAPIcall.getAepsBalance(rtid)
 
         } else {
             toast(getString(R.string.error_internet))
@@ -313,7 +315,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         cusid: String,
         deviceId: String,
         deviceNameDet: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_barNew.visibility = View.VISIBLE
 
@@ -322,7 +324,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 AppApiCalls(this, USER_LOGOUT, this)
             mAPIcall.userLogout(
                 cusid, deviceId, deviceNameDet, pin,
-                pass, cus_mobile, cus_type
+                pass, mobile, logintype
             )
         } else {
 
@@ -420,10 +422,10 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                     userModel = Gson()
                         .fromJson(notifyObjJson.toString(), UserModel::class.java)
                 }
-                navigation_viewNew.tvCustName.setText(userModel.cus_name)
-                navigation_viewNew.tvCustMobile.setText(userModel.cus_email)
+                navigation_viewNew.tvCustName.setText(userModel.name)
+                navigation_viewNew.tvCustMobile.setText(userModel.email)
 
-                if (userModel.cus_type.equals("retailer", ignoreCase = true)) {
+                if (userModel.logintype.equals("retailer", ignoreCase = true)) {
                   //  rl_manageusers.visibility = View.GONE
 
                 } else {
@@ -453,7 +455,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             Log.e(AppConstants.MESSAGE, messageCode)
             if (status.contains(AppConstants.TRUE)) {
 
-                tvWallet.text="Wallet ("+"${getString(R.string.Rupee)} ${jsonObject.getString(AppConstants.WALLETBALANCE)}"+")"
+                tvWallet.text="Wallet ("+"${getString(R.string.Rupee)} ${jsonObject.getString("balance")}"+")"
 
               /*  tvWalletBalance.text =
                     "${getString(R.string.Rupee)} ${jsonObject.getString(AppConstants.WALLETBALANCE)}"*/
@@ -508,7 +510,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             if (status.contains("true")) {
                 progress_barNew.visibility = View.INVISIBLE
                 AppPrefs.putStringPref("userModel", "", this)
-                AppPrefs.putStringPref("cus_id", "", this)
+                AppPrefs.putStringPref("rtid", "", this)
                 AppPrefs.putStringPref("user_id", "", this)
                 AppPrefs.putBooleanPref(AppConstants.IS_LOGIN, false, this)
 
@@ -640,7 +642,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                              //Log.e("AMOUNT",amount.toString())
                              //showDialogOffer(serviceName!!, amount.toString())
                          } else {*/
-                        //checkKycstatus(userModel.cus_id)
+                        //checkKycstatus(userModel.rtid)
                         if(newaepskyc_status.equals("done")) {
                             val bundle = Bundle()
                             bundle.putString("transactionType","aadharpay")
@@ -668,7 +670,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                             //Log.e("AMOUNT",amount.toString())
                             //showDialogOffer(serviceName!!, amount.toString())
                         } else {
-                            //checkKycstatus(userModel.cus_id)
+                            //checkKycstatus(userModel.rtid)
                             if(newaepskyc_status.equals("done")) {
                                 val intent = Intent(this, AepsTransactionActivityNew::class.java)
                                 intent.putExtra("from","O")
@@ -729,7 +731,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                             serviceName = "Micro ATM Service"
                             getServiceAmount(serviceName!!)
                         } else {
-                            microAtmLogin(userModel.cus_id)
+                            microAtmLogin(userModel.rtid)
                         }
                     } else if (service.equals("cashdeposite_service")) {
                         val cashdeposite_service = notifyObjJson.getString("cashdeposite_service")
@@ -741,7 +743,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                             bundle.putString("transactionType", "cashdeposit")
                             bundle.putString("transaction", "Cash Deposit")
                             bundle.putString("from","C")
-                            //checkKycstatus(userModel.cus_id)
+                            //checkKycstatus(userModel.rtid)
                             if(newaepskyc_status.equals("done")) {
                                 val intent = Intent(this, AepsTransactionActivityNew::class.java)
                                 intent.putExtras(bundle)
@@ -801,7 +803,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 val bundle = Bundle()
                 bundle.putString("latitude",latitudeLabel)
                 bundle.putString("longitude",longitudeLabel)
-                bundle.putString("cus_id", userModel.cus_id)
+                bundle.putString("rtid", userModel.rtid)
                 bundle.putString(
                     "aeps_merchantLoginId",
                     loginResult.getString("aeps_merchantLoginId")
@@ -848,14 +850,14 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     fun activityIntents() {
         rl_mobileRechargePrepaidNew.setOnClickListener {
             service = "recharge_service_prepaid"
-            getServiceStatus(userModel.cus_id, "recharge_service")
+            getServiceStatus(userModel.rtid, "recharge_service")
 
 
         }
 
         rl_mobileRechargePostpaidNew.setOnClickListener {
             service = "recharge_service_postpaid"
-            getServiceStatus(userModel.cus_id, "recharge_service")
+            getServiceStatus(userModel.rtid, "recharge_service")
 
 
         }
@@ -872,14 +874,20 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         }
 
         tvRedeemNew.setOnClickListener {
-            val intent = Intent(this, PayoutActivity::class.java)
-            startActivity(intent)
+            if (userModel.balance==0)
+            {
+                Toast.makeText(this@NewMainActivity,"Low Balance..",Toast.LENGTH_LONG).show()
+            }else{
+                val intent = Intent(this, PayoutActivity::class.java)
+                startActivity(intent)
+            }
+
         }
 
 
         rl_electricityNew.setOnClickListener {
             service = "bill_service"
-            getServiceStatus(userModel.cus_id, "bill_service")
+            getServiceStatus(userModel.rtid, "bill_service")
         }
 
         rl_CashDepositOtpNew.setOnClickListener {
@@ -888,24 +896,36 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         }
 
         rl_aepsNew.setOnClickListener {
-            service = "aeps_service"
-            getServiceStatus(userModel.cus_id, "aeps_service")
+            if (userModel.onboarding==false)
+            {
+                Toast.makeText(this@NewMainActivity,"Please onboard your account on web..",Toast.LENGTH_LONG).show()
+            }else{
+                service = "aeps_service"
+                getServiceStatus(userModel.rtid, "aeps_service")
+            }
+
         }
         rl_dmtNew.setOnClickListener {
             service = "dmt_service"
-            getServiceStatus(userModel.cus_id, "dmt_service")
+            getServiceStatus(userModel.rtid, "dmt_service")
 /*            val intent = Intent(this, SelectDmtActivity::class.java)
             startActivity(intent)*/
         }
 
         rl_aadharpayNew.setOnClickListener {
-            service = "adharpay_service"
-            getServiceStatus(userModel.cus_id, "adharpay_service")
+            if (userModel.balance==0)
+            {
+                Toast.makeText(this@NewMainActivity,"Low Balance..",Toast.LENGTH_LONG).show()
+            }else{
+                service = "adharpay_service"
+                getServiceStatus(userModel.rtid, "adharpay_service")
+            }
+
         }
 
       /*  rl_microatmNew.setOnClickListener {
             service = "microatm_service"
-            getServiceStatus(userModel.cus_id, "microatm_service")
+            getServiceStatus(userModel.rtid, "microatm_service")
 
         }*/
         rl_requestmoneyNew.setOnClickListener {
@@ -921,7 +941,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
 
         rl_CashDepositNew.setOnClickListener {
             service = "cashdeposite_service"
-            getServiceStatus(userModel.cus_id, "cashdeposite_service")
+            getServiceStatus(userModel.rtid, "cashdeposite_service")
         }
 
         rl_purchaseHistoryNew.setOnClickListener {
@@ -1000,7 +1020,7 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
         tv_amount.setText("₹"+amount)
 
         tv_pay.setOnClickListener {
-            buyService(userModel.cus_id, service.toString(), amount.toString())
+            buyService(userModel.rtid, service.toString(), amount.toString())
             dialog.dismiss()
         }
         tv_no.setOnClickListener { dialog.dismiss() }
@@ -1049,10 +1069,10 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
     }
 
 
-    private fun microAtmLogin(cus_id: String) {
+    private fun microAtmLogin(rtid: String) {
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall = AppApiCalls(this, MICRO_ATMLOGIN, this)
-            mAPIcall.microAtmLogin(cus_id)
+            mAPIcall.microAtmLogin(rtid)
         } else {
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
         }
@@ -1119,10 +1139,10 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
             userModel = gson.fromJson(json, UserModel::class.java)
 
             userLogout(
-                userModel.cus_id, deviceId, deviceNameDet.toString(),
-                userModel.cus_pin,
-                userModel.cus_pass,
-                userModel.cus_mobile, userModel.cus_type
+                userModel.rtid, deviceId, deviceNameDet.toString(),
+                "",
+                "",
+                userModel.mobile, userModel.logintype
             )
 
             dialog.cancel()

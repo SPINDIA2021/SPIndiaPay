@@ -99,7 +99,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
             } else {
 
                 checkIfSameRecharge(
-                    userModel.cus_mobile, etDthNumber.text.toString(),
+                    userModel.mobile, etDthNumber.text.toString(),
                     etAmountDth.text.toString(), operator_code
                 )
 
@@ -125,10 +125,9 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                     tvChooseOperator.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
             }
         }
@@ -143,7 +142,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
         val gson = Gson()
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
-        getBalanceApi(userModel.cus_mobile)
+        getBalanceApi(userModel.mobile)
 
 
     }
@@ -168,7 +167,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
     }
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -178,7 +177,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -186,7 +185,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
     }
 
     private fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -199,7 +198,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 AppConstants.CHECK_SAME_RECHARGE_API,
                 this
             )
-            mAPIcall.checkIfSameRecharge(cus_id, rec_mobile, amount, operator)
+            mAPIcall.checkIfSameRecharge(rtid, rec_mobile, amount, operator)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -207,7 +206,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
     }
 
     private fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
         progress_bar.visibility = View.VISIBLE
@@ -218,7 +217,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 AppConstants.VERFY_PIN_API,
                 this
             )
-            mAPIcall.verifyPin(cus_mobile, pin)
+            mAPIcall.verifyPin(mobile, pin)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -226,11 +225,11 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
     }
 
     private fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -240,7 +239,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 AppConstants.RECHARGE_API,
                 this
             )
-            mAPIcall.rechargeApi(cus_id, rec_mobile, amount, operator, cus_type)
+            mAPIcall.rechargeApi(rtid, rec_mobile, amount, operator, logintype)
 
         } else {
             this.toast(getString(R.string.error_internet))
@@ -316,7 +315,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
             Log.e(AppConstants.STATUS, status)
             if (status.contains("true")) {
                 progress_bar.visibility = View.GONE
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",this).toString())
             //confirmPinDialog()
 
             } else {
@@ -358,8 +357,8 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
             if (status.contains(TRUE)) {
                 progress_bar.visibility = View.GONE
                 rechargeApi(
-                    userModel.cus_id, etDthNumber.text.toString(),
-                    etAmountDth.text.toString(), operator_code, userModel.cus_type
+                    userModel.rtid, etDthNumber.text.toString(),
+                    etAmountDth.text.toString(), operator_code, userModel.logintype
                 )
 
             } else {
@@ -528,7 +527,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 dialog.etPin.setError("Please Enter Pin")
             } else {
 
-                verifyPin(userModel.cus_mobile,AppPrefs.getStringPref("AppPassword",this).toString())
+                verifyPin(userModel.mobile,AppPrefs.getStringPref("AppPassword",this).toString())
                 dialog.dismiss()
             }
 
@@ -573,7 +572,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
         pin: String,
         pass: String,
         cus_mobile: String,
-        cus_type: String
+        logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -582,7 +581,7 @@ class DthRechargeActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 AppApiCalls(this, DTH_INFO, this)
             mAPIcall.dthInfo(
                 mobile, operator, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                pass, mobile, logintype
             )
         } else {
 

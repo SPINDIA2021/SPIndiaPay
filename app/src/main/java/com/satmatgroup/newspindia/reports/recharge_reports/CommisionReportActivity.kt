@@ -70,15 +70,15 @@ class CommisionReportActivity : AppCompatActivity(), AppApiCalls.OnAPICallComple
         tvSelectFromDate.setText(dateInString)
         tvSelectToDate.setText(dateInString)
         commisionApi(
-            userModel.cus_id, AppCommonMethods.convertDateFormat(
+            userModel.rtid, AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy", "yyyy-MM-dd", tvSelectFromDate.text.toString()
             ).toString(), AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy", "yyyy-MM-dd", tvSelectToDate.text.toString()
             ).toString(),AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName",this ).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile,userModel.cus_type
+            "",
+            "",
+            userModel.mobile,userModel.logintype
 
 
         )
@@ -146,16 +146,16 @@ class CommisionReportActivity : AppCompatActivity(), AppApiCalls.OnAPICallComple
     }
 
     private fun commisionApi(
-        cus_id: String, fromdate: String, todate: String, deviceId:String,deviceName :String,pin :String,
-        pass : String,cus_mobile : String,cus_type :String
+        rtid: String, fromdate: String, todate: String, deviceId:String,deviceName :String,pin :String,
+        pass : String,mobile : String,logintype :String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, COMMISSION_REPORT, this)
-            mAPIcall.rechargeHistory(cus_id, fromdate, todate,deviceId ,deviceName,pin,
-                pass,cus_mobile,cus_type)
+            mAPIcall.rechargeHistory(rtid, fromdate, todate,deviceId ,deviceName,pin,
+                pass,mobile,logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -223,16 +223,16 @@ class CommisionReportActivity : AppCompatActivity(), AppApiCalls.OnAPICallComple
             if (convertedDate2.after(convertedDate)|| convertedDate2.equals(convertedDate)) {
                 recentRechargeHistoryModalArrayList = ArrayList()
                 commisionApi(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", date
                     ).toString(), AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", dateafter
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName",this ).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile,userModel.logintype
 
                 )
                 rvCommisionReport.apply {
@@ -265,16 +265,16 @@ class CommisionReportActivity : AppCompatActivity(), AppApiCalls.OnAPICallComple
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 commisionApi(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", tvSelectFromDate.text.toString()
                     ).toString(), AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy", "yyyy-MM-dd", tvSelectToDate.text.toString()
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName",this ).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile,userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile,userModel.logintype
                 )
                 true
             }

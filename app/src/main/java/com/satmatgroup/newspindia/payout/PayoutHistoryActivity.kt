@@ -43,7 +43,7 @@ class PayoutHistoryActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         userModel = gson.fromJson(json, UserModel::class.java)
 
         aepsPayoutHistory(
-            userModel.cus_id
+            userModel.rtid
         )
         custToolbar.ivMore.setOnClickListener {
             val popup = PopupMenu(this@PayoutHistoryActivity, ivMore)
@@ -74,7 +74,7 @@ class PayoutHistoryActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 aepsPayoutHistory(
-                    userModel.cus_id
+                    userModel.rtid
                 )
                 true
             }
@@ -84,7 +84,7 @@ class PayoutHistoryActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     }
 
     fun aepsPayoutHistory(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -92,7 +92,7 @@ class PayoutHistoryActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             val mAPIcall =
                 AppApiCalls(this, AEPS_PAYOUT_HISTORY, this)
             mAPIcall.aepsPayoutHistory(
-                cus_id
+                rtid
             )
         } else {
 

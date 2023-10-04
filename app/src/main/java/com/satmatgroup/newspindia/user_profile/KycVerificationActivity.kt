@@ -43,7 +43,7 @@ class KycVerificationActivity : AppCompatActivity() {
                 bundle.putString("requestremarks",etRequestRemarks.text.toString())
                 bundle.putString("aadharnumberkyc",etAdhaarNumber.text.toString())
                 bundle.putString("pannumberkyc",etPanNumber.text.toString())
-                bundle.putString("kyccusid",userModel.cus_id)
+                bundle.putString("kyccusid",userModel.rtid)
 
                 val intent = Intent(this, MantraDeviceActivity::class.java)
                 intent.putExtras(bundle)

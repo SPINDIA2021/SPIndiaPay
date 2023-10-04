@@ -51,7 +51,7 @@ class UserListActivityAdapter(
             rechargeHistoryModalList[position]
 //
         holder.tvUserName.setText("User Name : " + userListModel.cus_name)
-        holder.tvUserMobile.setText("Mobile : " + userListModel.cus_mobile)
+        holder.tvUserMobile.setText("Mobile : " + userListModel.mobile)
 
         if (userListModel.clbal.equals("null") || userListModel.clbal == null) {
             holder.tvUserBalance.setText("Balance  : ₹0")

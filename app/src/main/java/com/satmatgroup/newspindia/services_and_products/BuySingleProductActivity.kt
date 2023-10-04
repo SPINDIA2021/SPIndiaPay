@@ -135,7 +135,7 @@ class BuySingleProductActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
         tvProdName.setText(offer_name)
 
         tv_pay.setOnClickListener {
-            buyProductandService(userModel.cus_id,product_service_id,offer_name,quantity,totalPrice,address)
+            buyProductandService(userModel.rtid,product_service_id,offer_name,quantity,totalPrice,address)
             dialog.dismiss()
         }
         tv_no.setOnClickListener { dialog.dismiss() }
@@ -143,7 +143,7 @@ class BuySingleProductActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
     }
 
     private fun buyProductandService(
-        cus_id: String,
+        rtid: String,
         product_service_id: String,
         offer_name: String,
         quantity: String,
@@ -157,7 +157,7 @@ class BuySingleProductActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 this
             )
             mAPIcall.buyProductandService(
-                cus_id,
+                rtid,
                 product_service_id,
                 offer_name,
                 quantity,

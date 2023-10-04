@@ -386,8 +386,8 @@ class RegisterActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListe
                 /*   val gson = Gson()
                    val json = gson.toJson(userModel)
                    AppPrefs.putStringPref("userModel", json, this)
-                   AppPrefs.putStringPref("user_type", userModel.cus_type, this)
-                   AppPrefs.putStringPref("user_id", userModel.cus_id, this)
+                   AppPrefs.putStringPref("user_type", userModel.logintype, this)
+                   AppPrefs.putStringPref("user_id", userModel.rtid, this)
                    AppPrefs.putBooleanPref(AppConstants.IS_LOGIN, true, this)
                    AppPrefs.putStringPref("deviceId",deviceId,this);
                    AppPrefs.putStringPref("deviceName",deviceNameDet,this)

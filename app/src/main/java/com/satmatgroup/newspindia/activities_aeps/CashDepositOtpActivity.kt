@@ -96,7 +96,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                     etBankAcc.text.toString(),
                     nationalBankIdenticationNumber,
                     etCashDepositAmount.text.toString(),
-                    userModel.cus_id)
+                    userModel.rtid)
 
 
             }
@@ -122,7 +122,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         cdAcctNumber: String,
         cdnationalBankIdenticationNumber: String,
         cdtransactionAmount: String,
-        cus_id: String
+        rtid: String
     ) {
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall = AppApiCalls(
@@ -135,7 +135,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 cdAcctNumber,
                 cdnationalBankIdenticationNumber,
                 cdtransactionAmount,
-                cus_id
+                rtid
             )
             progress_bar_cash.visibility = View.VISIBLE
         } else {
@@ -155,7 +155,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
         fingpayTransactionId: String,
         cdPkId: String,
         otp: String,
-        cus_id: String
+        rtid: String
     ) {
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall = AppApiCalls(
@@ -171,7 +171,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                 fingpayTransactionId,
                 cdPkId,
                 otp,
-                cus_id
+                rtid
             )
             progress_bar_cash.visibility = View.VISIBLE
         } else {
@@ -279,7 +279,7 @@ class CashDepositOtpActivity : AppCompatActivity(), AppApiCalls.OnAPICallComplet
                     fingpayTransactionId,
                     cdPkId,
                     dialog.etOtp.text.toString(),
-                    userModel.cus_id
+                    userModel.rtid
                 )
 
                 dialog.dismiss()

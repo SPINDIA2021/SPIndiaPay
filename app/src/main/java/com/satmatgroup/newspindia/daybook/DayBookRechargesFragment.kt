@@ -59,19 +59,19 @@ class DayBookRechargesFragment : Fragment(), AppApiCalls.OnAPICallCompleteListen
         userModel = gson.fromJson(json, UserModel::class.java)
 
         userDayBook(
-            userModel.cus_id, AppPrefs.getStringPref("deviceId", requireContext()).toString(),
+            userModel.rtid, AppPrefs.getStringPref("deviceId", requireContext()).toString(),
             AppPrefs.getStringPref("deviceName", requireContext()).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
         )
         return root
 
     }
 
     private fun userDayBook(
-        cus_id: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
         root.progress_bar.visibility = View.VISIBLE
 
@@ -79,8 +79,8 @@ class DayBookRechargesFragment : Fragment(), AppApiCalls.OnAPICallCompleteListen
             val mAPIcall =
                 AppApiCalls(requireContext(), DAYBOOK, this)
             mAPIcall.userDayBook(
-                cus_id, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                rtid, deviceId, deviceName, pin,
+                pass, mobile, logintype
             )
         } else {
 

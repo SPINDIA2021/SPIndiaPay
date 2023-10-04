@@ -65,13 +65,13 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
                 recentRechargeHistoryModalArrayList =
                     java.util.ArrayList()
                 rechargeHistoryByMobile(
-                    userModel.cus_id,
+                    userModel.rtid,
                     etSearch.getText().toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
                 //filterNumber(etSearch.getText().toString());
             }
@@ -80,14 +80,14 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
                 recentRechargeHistoryModalArrayList = java.util.ArrayList()
                 etSearch.setText("")
                 rechargeHistoryByDate(
-                    userModel.cus_id,
+                    userModel.rtid,
                     AppCommonMethods.convertDateFormat("dd/MM/yyyy",
                         "yyyy-MM-dd", etDateSearch.text.toString()).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
 
                 //filterDate(etDateSearch.getText().toString());
@@ -101,8 +101,8 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
     }
 
     private fun rechargeHistoryByMobile(
-        cus_id: String, mobile: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, mobile: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, cus_mobile: String, logintype: String
     ) {
         etDateSearch.setText("")
         progress_bar.visibility = View.VISIBLE
@@ -111,8 +111,8 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
             val mAPIcall =
                 AppApiCalls(this, RECHARGE_HISTORY, this)
             mAPIcall.rechargeHistoryByMobile(
-                cus_id, mobile, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                rtid, mobile, deviceId, deviceName, pin,
+                pass, cus_mobile, logintype
             )
         } else {
 
@@ -121,8 +121,8 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
     }
 
     private fun rechargeHistoryByDate(
-        cus_id: String, date: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        rtid: String, date: String, deviceId: String, deviceName: String, pin: String,
+        pass: String, mobile: String, logintype: String
     ) {
         etSearch.setText("")
         progress_bar.visibility = View.VISIBLE
@@ -131,8 +131,8 @@ class SpecificRechargeHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICa
             val mAPIcall =
                 AppApiCalls(this, RECHARGE_HISTORY, this)
             mAPIcall.rechargeHistoryByDate(
-                cus_id, date, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                rtid, date, deviceId, deviceName, pin,
+                pass, mobile, logintype
             )
         } else {
 

@@ -69,7 +69,7 @@ class RecentRechargesAdapter(
             .into(holder.ivOperator)
 
         holder.tvRefId.text = rechargeHistoryModal.statusdesc
-        if (userModel.cus_type.equals("retailer")) {
+        if (userModel.logintype.equals("retailer")) {
 
             if (rechargeHistoryModal.retailer.equals("")) {
                 holder.tvCommisionRecvd.text =
@@ -82,7 +82,7 @@ class RecentRechargesAdapter(
 
 
             }
-        } else if (userModel.cus_type.equals("distributor")) {
+        } else if (userModel.logintype.equals("distributor")) {
             if (rechargeHistoryModal.distributor.equals("")) {
                 holder.tvCommisionRecvd.text =
                     mContext!!.resources.getString(R.string.Rupee) + "0"

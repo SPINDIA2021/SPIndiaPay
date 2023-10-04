@@ -19,7 +19,8 @@ object AppApiUrl : AppConstants {
     //GENERAL APP USER URLS
 
     //url =/applogin/
-    val LOGIN_BY_PASSWORD: String = "$BASE_URL/applogin/userLogin"
+   /* val LOGIN_BY_PASSWORD: String = "$BASE_URL/applogin/userLogin"*/
+    val LOGIN_BY_PASSWORD: String = "$BASE_URL1/api/login"
     val REGISTER_USER: String = "$BASE_URL/applogin/registerenquiry"
     val REGISTER: String = "$BASE_URL/applogin/register_user"
     val GETFORGOTOTP: String = BASE_URL + "/applogin/getpassotp"
@@ -30,7 +31,8 @@ object AppApiUrl : AppConstants {
     val GET_AEPS_BALANCE: String = "$BASE_URL/appapi/aepsBalance"
 
     val GET_DASHBOARD: String = "$BASE_URL/appapi/dashboard"
-    val GET_BALANCE: String = "$BASE_URL/appapi/walletBalance"
+   // val GET_BALANCE: String = "$BASE_URL/appapi/walletBalance"
+   val GET_BALANCE: String = "$BASE_URL1/api/wallet"
     val GET_PROFILE: String = "$BASE_URL/appapi/profile"
     val GET_OPERATORS: String = "$BASE_URL/appapi/getMobileOperators"
     val GET_ELECTIRCITY_OPERATORS: String = "$BASE_URL/appapi/getOperators"

@@ -94,7 +94,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
 
     UserModel userModel;
 
-    String cus_id;
+    String rtid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
 
 
         Bundle bundle = getIntent().getExtras();
-        cus_id = bundle.getString("cus_id");
+        rtid = bundle.getString("rtid");
 
         merchantId = bundle.getString("aeps_merchantLoginId");
         password = bundle.getString("aeps_merchantLoginPin");
@@ -220,7 +220,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
                 params.put("terminalId", terminalId);
                 params.put("fpId", fpId);
                 params.put("transId", transId);
-                params.put("cus_id", "59");
+                params.put("rtid", "59");
                 params.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTE4MTMyNDUsImV4cCI6MTYxMTgzMTI0NSwiaXNzIjoiaHR0cHM6XC9cL3Byb2ZpdHBheS5jby5pblwvIiwiZGF0YSI6eyJjdXNfaWQiOm51bGwsImN1c19uYW1lIjpudWxsLCJjdXNfbW9iaWxlIjoiOTg3NjU0MzIxMiIsImN1c19wYXNzd29yZCI6Ijk4NzQ1NiJ9fQ.wa1b2Z1O2bQHLlu_zOLQ8AVszFd6l4Kr3zM1i3hWg9M");
                 return params;
             }
@@ -467,7 +467,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
                         + "Bank RRN : " + bankRrn + "\n" + "Trand Type : " + transType + "\n"
                         + "Type : " + type + "\n" + "Card Num :" + cardNum + "\n" + "CardType :" + cardType + "\n" + "Bank Name :" + bankName + "\n" + "Terminal Id :" + terminalId;
 
-                microAtmTransaction(cus_id, String.valueOf(status), response, String.valueOf(transAmount), String.valueOf(balAmount), bankRrn, transType,
+                microAtmTransaction(rtid, String.valueOf(status), response, String.valueOf(transAmount), String.valueOf(balAmount), bankRrn, transType,
                         String.valueOf(type), cardNum, bankName, cardType, terminalId, fpId, transId);
                 Utils.logD("micro atm result is:" + s);
                 respTv.setText(s);
@@ -570,7 +570,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
     }
 
 
-    private void microAtmTransaction(String cus_id, String status, String response,
+    private void microAtmTransaction(String rtid, String status, String response,
                                      String transAmount, String balAmount,
                                      String bankRrn, String transType, String type,
                                      String cardNum, String bankName, String cardType,
@@ -579,7 +579,7 @@ public class MicroAtmActivity extends Activity implements AppApiCalls.OnAPICallC
 
 
             AppApiCalls mAPIcall = new AppApiCalls(this, MICRO_ATM_TRANSACTION, this);
-            mAPIcall.microAtmTransaction(cus_id, status, response,
+            mAPIcall.microAtmTransaction(rtid, status, response,
                     transAmount, balAmount,
                     bankRrn, transType, type,
                     cardNum, bankName, cardType,

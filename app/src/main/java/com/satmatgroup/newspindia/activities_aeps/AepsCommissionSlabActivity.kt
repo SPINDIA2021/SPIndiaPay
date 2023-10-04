@@ -41,12 +41,12 @@ class AepsCommissionSlabActivity : AppCompatActivity(), PopupMenu.OnMenuItemClic
         userModel = gson.fromJson(json, UserModel::class.java)
 
         commisionApi(
-            userModel.cus_id,
+            userModel.rtid,
             AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
 
 
         )
@@ -66,14 +66,14 @@ class AepsCommissionSlabActivity : AppCompatActivity(), PopupMenu.OnMenuItemClic
         }
     }
 
-    private fun commisionApi(cus_id: String, deviceId : String, deviceName : String,pin : String,
-                             pass : String, cus_mobile : String, cus_type : String) {
+    private fun commisionApi(rtid: String, deviceId : String, deviceName : String,pin : String,
+                             pass : String, mobile : String, logintype : String) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, COMMISION_SLAB, this)
-            mAPIcall.aepscommisionSlab(cus_id)
+            mAPIcall.aepscommisionSlab(rtid)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -127,11 +127,11 @@ class AepsCommissionSlabActivity : AppCompatActivity(), PopupMenu.OnMenuItemClic
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
             R.id.action_refresh -> {
-                commisionApi(userModel.cus_id, AppPrefs.getStringPref("deviceId", this).toString(),
+                commisionApi(userModel.rtid, AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type)
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype)
 
                 true
             }

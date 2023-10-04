@@ -220,7 +220,7 @@ class DmtTransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                     recipientModel.beneaccno,
                     recipientModel.IFSC,
                     etdmtTransferFundsAmount.text.toString(),
-                    userModel.cus_id, recipientModel.benename,
+                    userModel.rtid, recipientModel.benename,
                     recipientModel.banknameUnique,
                     recipientModel.BENEFICIARYID,
                     recipientModel.benemobile,apiname
@@ -258,13 +258,13 @@ class DmtTransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
                 dialog.etPin.setError("Please Enter Pin")
             } else {
                 confirmPinApi(
-                    userModel.cus_mobile,
+                    userModel.mobile,
                     dialog.etPin.text.toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pass,
-                    userModel.cus_mobile,
-                    userModel.cus_type
+                    "",
+                    userModel.mobile,
+                    userModel.logintype
                 )
                 dialog.dismiss()
 
@@ -291,13 +291,13 @@ class DmtTransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
             "OK"
         ) { dialog, id ->
             confirmPinApi(
-                userModel.cus_mobile,
+                userModel.mobile,
                 AppPrefs.getStringPref("AppPassword",this).toString(),
                 AppPrefs.getStringPref("deviceId", this).toString(),
                 AppPrefs.getStringPref("deviceName", this).toString(),
-                userModel.cus_pass,
-                userModel.cus_mobile,
-                userModel.cus_type
+                "",
+                userModel.mobile,
+                userModel.logintype
             )
             // confirmPin()
 
@@ -319,7 +319,7 @@ class DmtTransferFundsActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompl
         deviceName: String,
         pass: String,
         cus_mobile: String,
-        cus_type: String
+        logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 

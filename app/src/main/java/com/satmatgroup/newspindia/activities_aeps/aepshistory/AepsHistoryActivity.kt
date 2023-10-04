@@ -61,15 +61,15 @@ class AepsHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
         tvSelectDate.text = dateInString
         tvSelectDate.text = dateInString
         aepsHistory(
-            userModel.cus_id, AppCommonMethods.convertDateFormat(
+            userModel.rtid, AppCommonMethods.convertDateFormat(
                 "dd/MM/yyyy",
                 "yyyy-MM-dd", tvSelectDate.text.toString()
             ).toString(),
             AppPrefs.getStringPref("deviceId", this).toString(),
             AppPrefs.getStringPref("deviceName", this).toString(),
-            userModel.cus_pin,
-            userModel.cus_pass,
-            userModel.cus_mobile, userModel.cus_type
+            "",
+            "",
+            userModel.mobile, userModel.logintype
         )
         custToolbar.ivMore.setOnClickListener {
             val popup = PopupMenu(this@AepsHistoryActivity, ivMore)
@@ -92,15 +92,15 @@ class AepsHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
     }
 
     private fun aepsHistory(
-        cus_id: String, date: String, deviceId : String, deviceName : String,pin : String,
-        pass : String, cus_mobile : String, cus_type : String
+        rtid: String, date: String, deviceId : String, deviceName : String,pin : String,
+        pass : String, mobile : String, logintype : String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, AEPSHISTORY_REPORT, this)
-            mAPIcall.aepsHistory(cus_id, date,deviceId,deviceName, pin, pass, cus_mobile, cus_type)
+            mAPIcall.aepsHistory(rtid, date,deviceId,deviceName, pin, pass, mobile, logintype)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
@@ -156,15 +156,15 @@ class AepsHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
         return when (item!!.itemId) {
             R.id.action_refresh -> {
                 aepsHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy",
                         "yyyy-MM-dd", tvSelectDate.text.toString()
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
                 true
             }
@@ -185,15 +185,15 @@ class AepsHistoryActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLi
                 val date = "$mDay/$mmMonth/$mYear"
                 tvSelectDate.text = date
                 aepsHistory(
-                    userModel.cus_id, AppCommonMethods.convertDateFormat(
+                    userModel.rtid, AppCommonMethods.convertDateFormat(
                         "dd/MM/yyyy",
                         "yyyy-MM-dd", tvSelectDate.text.toString()
                     ).toString(),
                     AppPrefs.getStringPref("deviceId", this).toString(),
                     AppPrefs.getStringPref("deviceName", this).toString(),
-                    userModel.cus_pin,
-                    userModel.cus_pass,
-                    userModel.cus_mobile, userModel.cus_type
+                    "",
+                    "",
+                    userModel.mobile, userModel.logintype
                 )
 
             }, year, month, day)

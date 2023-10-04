@@ -52,37 +52,37 @@ class CreateUserActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLis
                 etRegPassword.error = "Please Enter Valid Password"
             } else {
 
-                if (userModel.cus_type.equals("distributor")) {
+                if (userModel.logintype.equals("distributor")) {
 
                     createRetailer(
                         etMobileNo.text.toString(),
-                        userModel.cus_id,
+                        userModel.rtid,
                         etRegName.text.toString(),
                         etRegPassword.text.toString(),
                         etRegEmail.text.toString(),
                         AppPrefs.getStringPref("deviceId", this).toString(),
                         AppPrefs.getStringPref("deviceName", this).toString(),
-                        userModel.cus_pin,
-                        userModel.cus_pass,
-                        userModel.cus_mobile,
-                        userModel.cus_type
+                        "",
+                        "",
+                        userModel.mobile,
+                        userModel.logintype
                     )
 
-                } else if (userModel.cus_type.equals("master")) {
+                } else if (userModel.logintype.equals("master")) {
 
                     createDistributor(
                         etMobileNo.text.toString(),
-                        userModel.cus_id,
+                        userModel.rtid,
                         etRegName.text.toString(),
                         etRegPassword.text.toString(),
                         etRegEmail.text.toString(),
                         AppPrefs.getStringPref("deviceId", this).toString(),
 
                         AppPrefs.getStringPref("deviceName", this).toString(),
-                        userModel.cus_pin,
-                        userModel.cus_pass,
-                        userModel.cus_mobile,
-                        userModel.cus_type
+                        "",
+                        "",
+                        userModel.mobile,
+                        userModel.logintype
 
                     )
 
@@ -99,7 +99,7 @@ class CreateUserActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLis
     private fun createRetailer(
         newMob: String, dis_id: String, newName: String,
         newPass: String, newEmail: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -109,7 +109,7 @@ class CreateUserActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLis
                 AppApiCalls(this, REGISTER_USER, this)
             mAPIcall.createUserApi(
                 newMob, dis_id, newName, newPass, newEmail, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                pass, mobile, logintype
             )
         } else {
 
@@ -120,7 +120,7 @@ class CreateUserActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLis
     private fun createDistributor(
         newMob: String, dis_id: String, newName: String,
         newPass: String, newEmail: String, deviceId: String, deviceName: String, pin: String,
-        pass: String, cus_mobile: String, cus_type: String
+        pass: String, mobile: String, logintype: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
@@ -130,7 +130,7 @@ class CreateUserActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteLis
                 AppApiCalls(this, REGISTER_USER, this)
             mAPIcall.createDistributorApi(
                 newMob, dis_id, newName, newPass, newEmail, deviceId, deviceName, pin,
-                pass, cus_mobile, cus_type
+                pass, mobile, logintype
             )
         } else {
 

@@ -75,7 +75,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
         userModel = gson.fromJson(json, UserModel::class.java)
 
         initView(root)
-        getBalanceApi(userModel.cus_mobile)
+        getBalanceApi(userModel.mobile)
 
         return root
     }
@@ -118,7 +118,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 return@setOnClickListener
             } else {
 
-                checkIfSameRecharge(userModel.cus_mobile,
+                checkIfSameRecharge(userModel.mobile,
                     view.etMobileNumberPostpaid.text.toString(),
                     view.etAmountPostpaid.text.toString(),operator_code)
 
@@ -147,7 +147,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
     }
 
     private fun getBalanceApi(
-        cus_id: String
+        rtid: String
     ) {
         root.progress_bar.visibility = View.VISIBLE
 
@@ -157,7 +157,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 AppConstants.BALANCE_API,
                 this
             )
-            mAPIcall.getBalance(cus_id)
+            mAPIcall.getBalance(rtid)
 
         } else {
             requireContext().toast(getString(R.string.error_internet))
@@ -166,7 +166,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
 
 
     private fun checkIfSameRecharge(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String
@@ -179,7 +179,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 AppConstants.CHECK_SAME_RECHARGE_API,
                 this
             )
-            mAPIcall.checkIfSameRecharge(cus_id, rec_mobile, amount, operator)
+            mAPIcall.checkIfSameRecharge(rtid, rec_mobile, amount, operator)
 
         } else {
             requireContext().toast(getString(R.string.error_internet))
@@ -187,7 +187,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
     }
 
     private fun verifyPin(
-        cus_mobile: String,
+        mobile: String,
         pin: String
     ) {
         root.progress_bar.visibility = View.VISIBLE
@@ -198,7 +198,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 AppConstants.VERFY_PIN_API,
                 this
             )
-            mAPIcall.verifyPin(cus_mobile, pin)
+            mAPIcall.verifyPin(mobile, pin)
 
         } else {
             requireContext().toast(getString(R.string.error_internet))
@@ -206,11 +206,11 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
     }
 
     private fun rechargeApi(
-        cus_id: String,
+        rtid: String,
         rec_mobile: String,
         amount: String,
         operator: String,
-        cus_type: String,
+        logintype: String,
     ) {
         root.progress_bar.visibility = View.VISIBLE
 
@@ -220,7 +220,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 AppConstants.RECHARGE_API,
                 this
             )
-            mAPIcall.rechargeApi(cus_id, rec_mobile, amount, operator, cus_type)
+            mAPIcall.rechargeApi(rtid, rec_mobile, amount, operator, logintype)
 
         } else {
             requireContext().toast(getString(R.string.error_internet))
@@ -295,7 +295,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
             Log.e(AppConstants.STATUS, status)
             if (status.contains("true")) {
                 root.progress_bar.visibility = View.GONE
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",context).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",context).toString())
               //  confirmPinDialog()
 
             } else {
@@ -337,8 +337,8 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
             if (status.contains(AppConstants.TRUE)) {
                 root.progress_bar.visibility = View.GONE
                 rechargeApi(
-                    userModel.cus_id, root.etMobileNumberPostpaid.text.toString(),
-                    root.etAmountPostpaid.text.toString(), operator_code, userModel.cus_type
+                    userModel.rtid, root.etMobileNumberPostpaid.text.toString(),
+                    root.etAmountPostpaid.text.toString(), operator_code, userModel.logintype
                 )
 
             } else {
@@ -470,7 +470,7 @@ class MobilePostpaidFragment : Fragment(), AppApiCalls.OnAPICallCompleteListener
                 dialog.etPin.requestFocus()
                 dialog.etPin.setError("Please Enter Pin")
             } else {
-                verifyPin(userModel.cus_mobile, AppPrefs.getStringPref("AppPassword",context).toString())
+                verifyPin(userModel.mobile, AppPrefs.getStringPref("AppPassword",context).toString())
                 dialog.dismiss()
             }
 

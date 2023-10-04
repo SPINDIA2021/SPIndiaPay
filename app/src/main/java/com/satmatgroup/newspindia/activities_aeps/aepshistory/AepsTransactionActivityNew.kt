@@ -157,17 +157,23 @@ class AepsTransactionActivityNew : AppCompatActivity(), BankAepsListAdapter.List
           }*/
 
         lay_withdrawal.setOnClickListener {
-            selectedOption(lay_withdrawal,text_withdrawal,img_withdrawal)
-            unSelectedOption(lay_balcheck,text_balcheck,img_balcheck)
-            unSelectedOption(lay_adharpay,text_adharpay,img_adharpay)
-            unSelectedOption(lay_ministatement,text_ministatement,img_ministatement)
-            unSelectedOption(lay_cashdeposit,text_cashdeposit,img_cashdeposit)
+            if (userModel.balance==0)
+            {
+                Toast.makeText(this@AepsTransactionActivityNew,"Low Balance..",Toast.LENGTH_LONG).show()
 
-            transactionType = "cashwithdrawal"
+            }else {
+                selectedOption(lay_withdrawal, text_withdrawal, img_withdrawal)
+                unSelectedOption(lay_balcheck, text_balcheck, img_balcheck)
+                unSelectedOption(lay_adharpay, text_adharpay, img_adharpay)
+                unSelectedOption(lay_ministatement, text_ministatement, img_ministatement)
+                unSelectedOption(lay_cashdeposit, text_cashdeposit, img_cashdeposit)
 
-            ll_aepsamount.visibility = VISIBLE
-            tvTitleAmt.visibility= VISIBLE
-            llDefaultAmt.visibility= VISIBLE
+                transactionType = "cashwithdrawal"
+
+                ll_aepsamount.visibility = VISIBLE
+                tvTitleAmt.visibility = VISIBLE
+                llDefaultAmt.visibility = VISIBLE
+            }
         }
 
         lay_balcheck.setOnClickListener {
@@ -262,7 +268,7 @@ class AepsTransactionActivityNew : AppCompatActivity(), BankAepsListAdapter.List
                 bundle.putString("latitude", latitudeLabel);
                 bundle.putString("longitude", longitudeLabel);
                 bundle.putString("flag", "aeps")
-                bundle.putString("cus_id", userModel.cus_mobile)
+                bundle.putString("rtid", userModel.rtid)
                 bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
                 bundle.putString(
                     "nationalBankIdenticationNumber",
@@ -290,7 +296,7 @@ class AepsTransactionActivityNew : AppCompatActivity(), BankAepsListAdapter.List
             bundle.putString("latitude",latitudeLabel);
             bundle.putString("longitude",longitudeLabel);
             bundle.putString("flag","aeps")
-            bundle.putString("cus_id", userModel.cus_mobile)
+            bundle.putString("rtid", userModel.mobile)
             bundle.putString("aadhar_no", etAepsAadharNo.text.toString())
             bundle.putString(
                 "nationalBankIdenticationNumber",

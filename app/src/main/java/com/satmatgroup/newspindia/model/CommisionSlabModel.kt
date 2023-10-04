@@ -1,7 +1,7 @@
 package com.satmatgroup.newspindia.model
 
 data class CommisionSlabModel(
-    val cus_id: String,
+    val rtid: String,
     val operatorname: String,
     val package_id: String,
     val packcomm_comm: String,

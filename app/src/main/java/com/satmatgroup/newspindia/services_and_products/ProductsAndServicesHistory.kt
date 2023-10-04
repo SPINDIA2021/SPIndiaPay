@@ -38,7 +38,7 @@ class ProductsAndServicesHistory : AppCompatActivity(), AppApiCalls.OnAPICallCom
         val json = AppPrefs.getStringPref(AppConstants.USER_MODEL, this)
         userModel = gson.fromJson(json, UserModel::class.java)
 
-        productServicesHistory(userModel.cus_id)
+        productServicesHistory(userModel.rtid)
 
         rvProductsHistory.apply {
             layoutManager = LinearLayoutManager(this@ProductsAndServicesHistory)
@@ -49,14 +49,14 @@ class ProductsAndServicesHistory : AppCompatActivity(), AppApiCalls.OnAPICallCom
 
 
     fun productServicesHistory(
-        cus_id: String
+        rtid: String
     ) {
         progress_bar.visibility = View.VISIBLE
 
         if (AppCommonMethods(this).isNetworkAvailable) {
             val mAPIcall =
                 AppApiCalls(this, PRODUCT_HISTORY, this)
-            mAPIcall.productServicesHistory(cus_id)
+            mAPIcall.productServicesHistory(rtid)
         } else {
 
             Toast.makeText(this, "Internet Error", Toast.LENGTH_SHORT).show()
