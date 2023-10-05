@@ -901,7 +901,10 @@ class NewMainActivity : AppCompatActivity(), AppApiCalls.OnAPICallCompleteListen
                 Toast.makeText(this@NewMainActivity,"Please onboard your account on web..",Toast.LENGTH_LONG).show()
             }else{
                 service = "aeps_service"
-                getServiceStatus(userModel.rtid, "aeps_service")
+               // getServiceStatus(userModel.rtid, "aeps_service")
+                val intent = Intent(this, AepsTransactionActivityNew::class.java)
+                intent.putExtra("from","O")
+                startActivity(intent)
             }
 
         }

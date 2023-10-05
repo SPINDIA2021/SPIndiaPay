@@ -279,7 +279,29 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
                             longitude);*/
 
 
+                    //Ba;lance Check;
 
+
+                   /* String resultSend="<?xml version=\"1.0\"?>\n" +
+                            "<PidData>\n" +
+                            "  <Resp errCode=\"0\" errInfo=\"Success.\" fCount=\"1\" fType=\"2\" nmPoints=\"44\" qScore=\"71\" />\n" +
+                            "  <DeviceInfo dpId=\"MANTRA.MSIPL\" rdsId=\"MANTRA.WIN.001\" rdsVer=\"1.0.8\" mi=\"MFS100\" mc=\"MIIEGDCCAwCgAwIBAgIEAZv8wDANBgkqhkiG9w0BAQsFADCB6jEqMCgGA1UEAxMhRFMgTUFOVFJBIFNPRlRFQ0ggSU5ESUEgUFZUIExURCAzMVUwUwYDVQQzE0xCLTIwMyBTaGFwYXRoIEhleGEgT3Bwb3NpdGUgR3VqYXJhdCBIaWdoIENvdXJ0IFMuRyBIaWdod2F5IEFobWVkYWJhZCAtMzgwMDYwMRIwEAYDVQQJEwlBSE1FREFCQUQxEDAOBgNVBAgTB0dVSkFSQVQxCzAJBgNVBAsTAklUMSUwIwYDVQQKExxNQU5UUkEgU09GVEVDSCBJTkRJQSBQVlQgTFREMQswCQYDVQQGEwJJTjAeFw0yMzEwMDUwODMwMjhaFw0yMzExMDQwODQ1MjdaMIGwMSUwIwYDVQQDExxNYW50cmEgU29mdGVjaCBJbmRpYSBQdnQgTHRkMR4wHAYDVQQLExVCaW9tZXRyaWMgTWFudWZhY3R1cmUxDjAMBgNVBAoTBU1TSVBMMRIwEAYDVQQHEwlBSE1FREFCQUQxEDAOBgNVBAgTB0dVSkFSQVQxCzAJBgNVBAYTAklOMSQwIgYJKoZIhvcNAQkBFhVzdXBwb3J0QG1hbnRyYXRlYy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD1lEisnPEuYXWtQ9BpRUpgZ0oiPwoZ89DCTvjKf8grMHD9T0L2Ri3PBqEp7K0Fq7EB7WnX/uVSQBweE/ZX/PVwoQUpOSZnW0pyHafYSjzUF3fPc7HmAghyBnSkiEXxIb2ht7Q/sN98AJxLNIi6hbv6dxGvua7e8PsvSGwflNl1OBiIaEdZPj5g9NMVL7nzn1zkXNPrAXVRiGRi01wMTkh9FL/zN4xyXFB7wCUaDSnNwx47Ca54k9LySARWZAtaVaEfPKM4NHuloH9400P3nViXuxY9m2czFwaGumJI9d1MMwumVj0RCcQaxSfKxcze1D+elvRZ31qfPJPdw8wt2YNPAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAK8RfF61qZxKKqocKp80vUyjSpr7EtMGMimLfbNwOehMkdWNLDdL3V0T+HhA1lDSa5+Evo4JDbmLKRGb7WiEz/X4XtmLKXDAmuDWkz8+2jieLeC85/IypovuG3WwtOfLcfDZePyrqshjEWpJjGtAWrO99wJ5kmdp4vmzkAtAc9Vk9KssUy1UrKgHEVYa0oZBrZfr8c7H5zXx9PAXNdW9tp59w0Ghmy/IifcX6wpcM9fxXTgBywS8Xv8obHNl/fDCtXpILpdjt4TfwyyRXG82fd8LJQ0SRzkopvL+UEpUYlN59o1U8Fbinw/IJHqqYtRNNwKWZe1mIkawKnBvF8xn1fw=\" dc=\"eaaaf4f5-8cdb-43e4-b92a-7fb1fa64f434\">\n" +
+                            "    <additional_info>\n" +
+                            "      <Param name=\"srno\" value=\"3343576\" />\n" +
+                            "      <Param name=\"sysid\" value=\"6E9FEBF3ED6125EFBFF0\" />\n" +
+                            "      <Param name=\"ts\" value=\"2023-10-05T16:34:38+05:30\" />\n" +
+                            "    </additional_info>\n" +
+                            "  </DeviceInfo>\n" +
+                            "  <Skey ci=\"20250923\">mJOkWAClAk1W92b9qwO42NdIoujhWnEsa83w3QdC5nUlZs0mr5iHcPcIGJxEpVQSEIlad2GVLkQkhj4yqon2k2tpFhts4R6Bw3uGpKoBZr3nUHUyf27TOkeGyU1dg9WgbB6J4S3pECSAo+MLm3e0kf5VwlcOIQP0AUXbfMlBdZCASU2iRDAH5ycndhXQvlKe3U7sKU7po3l1mju5cNDbDLSRJqLHIA+TRSfZPMopHq0njVNBskY+D8ygmGWpZ/GlfXjhYpt12GrK8Sa4RqS5csOx7KLKHrrvkKeyORnylSjEFFVUzBqhNJiPmtzaq94PkvvPTgfaDjlaJ5+hUuflZg==</Skey>\n" +
+                            "  <Hmac>jlT6lKtrzzqNu8jDHcdNtvKSwShf6As+ErJY+eUIBEZAxRmZhOwcON91yj8PRzff</Hmac>\n" +
+                            "  <Data type=\"X\">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</Data>\n" +
+                            "</PidData>\n";
+
+
+                    callServiceSave(rtid, resultSend, "418869728175", nationalBankIdenticationNumber,
+                            "9799754037", transactionType, sendAmount, latitude,
+                            longitude);
+*/
 
 
                     try {
@@ -561,7 +583,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
             Log.e("AEPS_TRANSACTION", result);
          //  Toast.makeText(this, "AEPS_TRANSACTION : "+result , Toast.LENGTH_SHORT).show();
             //result(result);
-            JSONObject jsonObject = new JSONObject(result);
+            JSONObject jsonObject = new JSONObject("data");
             String status = jsonObject.getString(AppConstants.STATUS);
             String aepsmessage = jsonObject.getString(AppConstants.MESSAGE);
 
@@ -611,7 +633,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
                     } else {
 
 
-                        JSONObject aepsResultObj = jsonObject.getJSONObject("result");
+                        JSONObject aepsResultObj = jsonObject.getJSONObject("data");
                         //  JSONObject aepsData = aepsResultObj.getJSONObject("data");
                         String terminalId = aepsResultObj.getString("terminalId");
                         String requestTransactionTime = aepsResultObj.getString("requestTransactionTime");
@@ -714,7 +736,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
 
         if (flag.equals(EKYC)) {
             Log.e("EKYC", result);
-            JSONObject jsonObject = new JSONObject(result);
+            JSONObject jsonObject = new JSONObject("data");
             String status = jsonObject.getString(AppConstants.STATUS);
             String aepsmessage = jsonObject.getString(AppConstants.MESSAGE);
             Log.e(AppConstants.STATUS, status);
@@ -985,8 +1007,12 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
 
     private void callServiceSave(String rtid, String result, String aadhar_no,
                                  String nationalBankIdenticationNumber,
-                                 String mobile_no, String transactionType,
+                                 String mobile_no, String type,
                                  String sendAmount, String latitude, String longitude) {
+
+
+
+
 
         progress_bar.setVisibility(View.VISIBLE);
         System.setProperty("http.keepAlive", "false");
@@ -1027,6 +1053,11 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
         //creating the retrofit api service
         MainIAPI apiService = retrofit.create(MainIAPI.class);
 
+        if (type.equals("aadharpay"))
+        {
+            type="aadharpayment";
+        }
+
 
         RequestBody nationalbankidentification = createPartFromString(nationalBankIdenticationNumber);
         RequestBody mobileNumber = createPartFromString(mobile_no);
@@ -1035,7 +1066,7 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
         RequestBody adhaarnumber = createPartFromString(aadhar_no);
         RequestBody rtid1=createPartFromString(rtid);
         RequestBody fingerprintdata=createPartFromString(result);
-        RequestBody callfunctn=createPartFromString(transactionType);
+        RequestBody callfunctn=createPartFromString(type);
         RequestBody transactionAmount=createPartFromString(sendAmount);
 
 
@@ -1056,145 +1087,290 @@ public class MantraDeviceActivity extends AppCompatActivity implements AppApiCal
 
                     progress_bar.setVisibility(View.GONE);
                     //   Toast.makeText(this, "Result : "+status , Toast.LENGTH_SHORT).show();
-
-                    if (transactionType.equals("aepstwofactorregistration"))
+                    if (response.body().getAthRegistrationResponse()!=null)
                     {
-                        try{
-                            Toast.makeText(MantraDeviceActivity.this, response.body().getAthRegistrationResponse().getMessage(), Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(MantraDeviceActivity.this, AepsTwoFactorAuthenticationActivity.class);
-                            intent.putExtra("from","aepstwofactorauthentication");
-                            startActivity(intent);
-                        }catch (Exception e){
+                        if (transactionType.equals("aepstwofactorregistration"))
+                        {
+                            try{
+                                Toast.makeText(MantraDeviceActivity.this, response.body().getAthRegistrationResponse().getMessage(), Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(MantraDeviceActivity.this, AepsTwoFactorAuthenticationActivity.class);
+                                intent.putExtra("from","aepstwofactorauthentication");
+                                startActivity(intent);
+                            }catch (Exception e){
+                                Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }else if (transactionType.equals("aepstwofactorauthentication")){
                             Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }else if (transactionType.equals("aepstwofactorauthentication")){
-                        Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(MantraDeviceActivity.this, NewMainActivity.class);
-                        startActivity(intent);
-
-                    }else {
-
-                        Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                       /* if (transactionType.equalsIgnoreCase("ministatement")) {
-
-                            //          Toast.makeText(this, "" + result, Toast.LENGTH_SHORT).show();
-                            ArrayList<MiniStatementModel> miniStatementModelArrayList = new ArrayList<>();
-
-                            JSONArray cast = jsonObject.getJSONArray("ministatement");
-                            Toast.makeText(this, "cast : "+cast , Toast.LENGTH_SHORT).show();
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject notifyObjJson = cast.getJSONObject(i);
-                                String date = notifyObjJson.getString("date");
-
-                                Log.e("date", date);
-                                MiniStatementModel offersModel = new Gson()
-                                        .fromJson(notifyObjJson.toString(), MiniStatementModel.class);
-                                miniStatementModelArrayList.add(offersModel);
-
-                            }
-
-                            Bundle newBundle = new Bundle();
-                            newBundle.putParcelableArrayList("miniStatementModelArrayList",
-                                    miniStatementModelArrayList);
-                            Intent intent = new Intent(this, MinistatementActivity.class);
-                            intent.putExtras(newBundle);
+                            Intent intent=new Intent(MantraDeviceActivity.this, NewMainActivity.class);
                             startActivity(intent);
 
-                        } else {
+                        }else {
+                            String date = "";
+                            String status="";
+                            String aepsmessage="";
+                          //  Toast.makeText(MantraDeviceActivity.this, aepsmessage, Toast.LENGTH_SHORT).show();
+                            JSONObject jsonObject = null;
 
-
-                            JSONObject aepsResultObj = jsonObject.getJSONObject("result");
-                            //  JSONObject aepsData = aepsResultObj.getJSONObject("data");
-                            String terminalId = aepsResultObj.getString("terminalId");
-                            String requestTransactionTime = aepsResultObj.getString("requestTransactionTime");
-                            String transactionAmount = aepsResultObj.getString("transactionAmount");
-                            String transactionStatus = aepsResultObj.getString("transactionStatus");
-                            String balanceAmount = aepsResultObj.getString("balanceAmount");
-                            String bankRRN = aepsResultObj.getString("bankRRN");
-                            String transactionType = aepsResultObj.getString("transactionType");
-                            String fpTransactionId = aepsResultObj.getString("fpTransactionId");
-                            String merchantTransactionId = aepsResultObj.getString("merchantTransactionId");
-                            String outletname = jsonObject.getString("outletname");
-                            String outletmobile = jsonObject.getString("outletmobile");
-                            String url = jsonObject.getString("url");
-
-                            //   Toast.makeText(this, "transactionType : "+transactionType , Toast.LENGTH_SHORT).show();
-
-                            // String retailerid = jsonObject.getString("rtid");
-                            if (transactionType.equalsIgnoreCase("BE")) {
-
-                                Bundle beBunndle = new Bundle();
-                                beBunndle.putString("aepsmessage", aepsmessage);
-                                beBunndle.putString("terminalId", terminalId);
-                                beBunndle.putString("requestTransactionTime", requestTransactionTime);
-                                beBunndle.putString("transactionAmount", transactionAmount);
-                                beBunndle.putString("transactionStatus", transactionStatus);
-                                beBunndle.putString("balanceAmount", balanceAmount);
-                                beBunndle.putString("bankRRN", bankRRN);
-                                beBunndle.putString("transactionType", transactionType);
-                                beBunndle.putString("fpTransactionId", fpTransactionId);
-                                beBunndle.putString("merchantTransactionId", merchantTransactionId);
-                                beBunndle.putString("outletname", outletname);
-                                beBunndle.putString("outletmobile", outletmobile);
-                                beBunndle.putString("url", url);
-                                Intent intent = new Intent(this, BalanceCheckResponseActivity.class);
-                                intent.putExtras(beBunndle);
-                                startActivity(intent);
-                                finish();
-
-                            } else if (transactionType.equalsIgnoreCase("CW") ||
-                                    transactionType.equalsIgnoreCase("M")) {
-                                Bundle cwBunndle = new Bundle();
-                                cwBunndle.putString("aepsmessage", aepsmessage);
-                                cwBunndle.putString("terminalId", terminalId);
-                                cwBunndle.putString("requestTransactionTime", requestTransactionTime);
-                                cwBunndle.putString("transactionAmount", transactionAmount);
-                                cwBunndle.putString("transactionStatus", transactionStatus);
-                                cwBunndle.putString("balanceAmount", balanceAmount);
-                                cwBunndle.putString("bankRRN", bankRRN);
-                                cwBunndle.putString("transactionType", transactionType);
-                                cwBunndle.putString("fpTransactionId", fpTransactionId);
-                                cwBunndle.putString("merchantTransactionId", merchantTransactionId);
-                                cwBunndle.putString("outletname", outletname);
-                                cwBunndle.putString("outletmobile", outletmobile);
-                                cwBunndle.putString("url", url);
-                                cwBunndle.putString("aadhar_no", aadhar_no);
-                                cwBunndle.putString("bankName", bankName);
-                                // cwBunndle.putString("retailerId", retailerid);
-                                Intent intent = new Intent(this, CashWithdrawalSuccessActivity.class);
-                                intent.putExtras(cwBunndle);
-                                startActivity(intent);
-                                finish();
-
-                            } else if (transactionType.equalsIgnoreCase("cashdeposit")) {
-                                Bundle cwBunndle = new Bundle();
-                                cwBunndle.putString("aepsmessage", aepsmessage);
-                                cwBunndle.putString("terminalId", terminalId);
-                                cwBunndle.putString("requestTransactionTime", requestTransactionTime);
-                                cwBunndle.putString("transactionAmount", transactionAmount);
-                                cwBunndle.putString("transactionStatus", transactionStatus);
-                                cwBunndle.putString("balanceAmount", balanceAmount);
-                                cwBunndle.putString("bankRRN", bankRRN);
-                                cwBunndle.putString("transactionType", transactionType);
-                                cwBunndle.putString("fpTransactionId", fpTransactionId);
-                                cwBunndle.putString("merchantTransactionId", merchantTransactionId);
-                                cwBunndle.putString("outletname", outletname);
-                                cwBunndle.putString("outletmobile", outletmobile);
-                                cwBunndle.putString("url", url);
-                                cwBunndle.putString("aadhar_no", aadhar_no);
-                                cwBunndle.putString("bankName", bankName);
-                                //  cwBunndle.putString("retailerId", retailerid);
-                                Intent intent = new Intent(this, CashWithdrawalSuccessActivity.class);
-                                intent.putExtras(cwBunndle);
-                                startActivity(intent);
-                                finish();
-
+                            try {
+                                jsonObject = new JSONObject("data");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        }*/
+                            if (transactionType.equalsIgnoreCase("ministatement")) {
+
+                                //          Toast.makeText(this, "" + result, Toast.LENGTH_SHORT).show();
+                                ArrayList<MiniStatementModel> miniStatementModelArrayList = new ArrayList<>();
+
+                                try {
+                                    status = jsonObject.getString(AppConstants.STATUS);
+                                    aepsmessage = jsonObject.getString(AppConstants.MESSAGE);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                JSONArray cast = null;
+                                try {
+                                    cast = jsonObject.getJSONArray("ministatement");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(MantraDeviceActivity.this, "cast : "+cast , Toast.LENGTH_SHORT).show();
+
+                                for (int i = 0; i < cast.length(); i++) {
+                                    JSONObject notifyObjJson = null;
+
+                                    try {
+                                        notifyObjJson = cast.getJSONObject(i);
+                                        date = notifyObjJson.getString("date");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    Log.e("date", date);
+                                    MiniStatementModel offersModel = new Gson()
+                                            .fromJson(notifyObjJson.toString(), MiniStatementModel.class);
+                                    miniStatementModelArrayList.add(offersModel);
+
+                                }
+
+                                Bundle newBundle = new Bundle();
+                                newBundle.putParcelableArrayList("miniStatementModelArrayList",
+                                        miniStatementModelArrayList);
+                                Intent intent = new Intent(MantraDeviceActivity.this, MinistatementActivity.class);
+                                intent.putExtras(newBundle);
+                                startActivity(intent);
+
+                            } else {
+
+
+                                JSONObject aepsResultObj = null;
+                                try {
+                                    aepsResultObj = jsonObject.getJSONObject("data");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                //  JSONObject aepsData = aepsResultObj.getJSONObject("data");
+                               /* String terminalId = null;
+                                try {
+                                    terminalId = aepsResultObj.getString("terminalId");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String requestTransactionTime = null;
+                                try {
+                                    requestTransactionTime = aepsResultObj.getString("requestTransactionTime");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String transactionAmount = null;
+                                try {
+                                    transactionAmount = aepsResultObj.getString("transactionAmount");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String transactionStatus = null;
+                                try {
+                                    transactionStatus = aepsResultObj.getString("transactionStatus");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String balanceAmount = null;
+                                try {
+                                    balanceAmount = aepsResultObj.getString("balanceAmount");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String bankRRN = null;
+                                try {
+                                    bankRRN = aepsResultObj.getString("bankRRN");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String transactionType = null;
+                                try {
+                                    transactionType = aepsResultObj.getString("transactionType");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String fpTransactionId = null;
+                                try {
+                                    fpTransactionId = aepsResultObj.getString("fpTransactionId");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String merchantTransactionId = null;
+                                try {
+                                    merchantTransactionId = aepsResultObj.getString("merchantTransactionId");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String outletname = null;
+                                try {
+                                    outletname = jsonObject.getString("outletname");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String outletmobile = null;
+                                try {
+                                    outletmobile = jsonObject.getString("outletmobile");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String url = null;
+                                try {
+                                    url = jsonObject.getString("url");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }*/
+
+
+
+                                // String retailerid = jsonObject.getString("rtid");
+                                if (transactionType.equalsIgnoreCase("balancecheck")) {
+
+                                    Toast.makeText(MantraDeviceActivity.this, aepsmessage, Toast.LENGTH_SHORT).show();
+
+
+                                } else if (transactionType.equalsIgnoreCase("cashwithdrawal")) {
+                                    try {
+                                        aepsmessage=jsonObject.getString("message");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Bundle cwBunndle = new Bundle();
+                                    cwBunndle.putString("aepsmessage", aepsmessage);
+                                    try {
+                                        cwBunndle.putString("terminalId", jsonObject.getString("ackno"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    cwBunndle.putString("requestTransactionTime", "Not Available");
+                                    try {
+                                        cwBunndle.putString("transactionAmount", jsonObject.getString("amount"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("transactionStatus", jsonObject.getString("status"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("balanceAmount", jsonObject.getString("balanceamount"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("bankRRN", jsonObject.getString("bankrrn"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    cwBunndle.putString("transactionType", transactionType);
+                                    try {
+                                        cwBunndle.putString("fpTransactionId", jsonObject.getString("clientrefno"));
+
+                                    cwBunndle.putString("merchantTransactionId", jsonObject.getString("clientrefno"));
+                                        cwBunndle.putString("outletname", jsonObject.getString("name"));
+                                        cwBunndle.putString("outletmobile", jsonObject.getString("mobile"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    cwBunndle.putString("url", "");
+                                    cwBunndle.putString("aadhar_no", aadhar_no);
+                                    cwBunndle.putString("bankName", bankName);
+                                    // cwBunndle.putString("retailerId", retailerid);
+                                    Intent intent = new Intent(MantraDeviceActivity.this, CashWithdrawalSuccessActivity.class);
+                                    intent.putExtras(cwBunndle);
+                                    startActivity(intent);
+                                    finish();
+
+                                } else if (transactionType.equalsIgnoreCase("cashdeposit")) {
+                                    try {
+                                        aepsmessage=jsonObject.getString("message");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Bundle cwBunndle = new Bundle();
+                                    cwBunndle.putString("aepsmessage", aepsmessage);
+                                    try {
+                                        cwBunndle.putString("terminalId", jsonObject.getString("ackno"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    cwBunndle.putString("requestTransactionTime", "Not Available");
+                                    try {
+                                        cwBunndle.putString("transactionAmount", jsonObject.getString("amount"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("transactionStatus", jsonObject.getString("status"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("balanceAmount", jsonObject.getString("balanceamount"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    try {
+                                        cwBunndle.putString("bankRRN", jsonObject.getString("bankrrn"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    cwBunndle.putString("transactionType", transactionType);
+                                    try {
+                                        cwBunndle.putString("fpTransactionId", jsonObject.getString("clientrefno"));
+
+                                        cwBunndle.putString("merchantTransactionId", jsonObject.getString("clientrefno"));
+                                        cwBunndle.putString("outletname", jsonObject.getString("name"));
+                                        cwBunndle.putString("outletmobile", jsonObject.getString("mobile"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    cwBunndle.putString("url", "");
+                                    cwBunndle.putString("aadhar_no", aadhar_no);
+                                    cwBunndle.putString("bankName", bankName);
+                                    //  cwBunndle.putString("retailerId", retailerid);
+                                    Intent intent = new Intent(MantraDeviceActivity.this, CashWithdrawalSuccessActivity.class);
+                                    intent.putExtras(cwBunndle);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                            }
+                        }
+                    }else {
+                        Toast.makeText(MantraDeviceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
+
+
 
 
 
