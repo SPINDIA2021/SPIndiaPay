@@ -100,6 +100,10 @@ class AepsTransactionActivityNew : AppCompatActivity(), BankAepsListAdapter.List
             transactionType= bundle.getString("transactionType").toString()
             from=bundle.getString("from").toString()
         }
+        if (transactionType==null)
+        {
+            transactionType="cashwithdrawal"
+        }
 
         if (from.equals("A"))
         {

@@ -5008,23 +5008,18 @@ class AppApiCalls(
                 }
             ) {
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val jsonObject: MutableMap<String, String> =
-                        HashMap()
-
-                    jsonObject["nationalbankidentification"] = nationalBankIdenticationNumber
-                    jsonObject["mobileNumber"] = mobileNumber
-                    jsonObject["longitude"] = longitude
-                    jsonObject["latitude"] = latitude
-                    jsonObject["adhaarnumber"] = adhaarNumber
-                    jsonObject["rtid"] = rtid
-                    jsonObject["fingerprintdata"] = txtPidData
-                    jsonObject["callfunctn"] = type
-                    jsonObject["transactionAmount"] = transactionAmount
-
-                    jsonObject[TOKEN] = AppPrefs.getStringPref(TOKEN, mContext).toString()
-
-                    return jsonObject
+                override fun getParams(): Map<String, String>? {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["nationalbankidentification"] = nationalBankIdenticationNumber
+                    params["mobileNumber"] = mobileNumber
+                    params["longitude"] = longitude
+                    params["latitude"] = latitude
+                    params["adhaarnumber"] = adhaarNumber
+                    params["rtid"] = rtid
+                    params["fingerprintdata"] = txtPidData
+                    params["callfunctn"] = type
+                    params["transactionAmount"] = transactionAmount
+                    return params
                 }
 
                 @Throws(AuthFailureError::class)
